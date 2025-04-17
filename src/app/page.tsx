@@ -1,8 +1,13 @@
+import Pasuteru from "../assets/images/Pasuteru.png";
+import { Box } from "@mui/material";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <>
-    <div className="bg-red-200">テスト</div>
-    </>  );
+export default function TitlePage() {
+    return (
+        <>
+            <Box>
+                <Image src={Pasuteru} alt="TitleBackground" layout="fill" />
+            </Box>
+        </> 
+    );
 }
