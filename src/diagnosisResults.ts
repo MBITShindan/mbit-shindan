@@ -1,10 +1,12 @@
-export type MBTIType = // MBTIのタイプ
+// MBTIのタイプ
+export type MBTIType =
   | "ENTP" | "INTP" | "INTJ" | "ENTJ"
   | "ENFP" | "INFP" | "INFJ" | "ENFJ"
   | "ESTJ" | "ISTJ" | "ISFJ" | "ESFJ"
   | "ESTP" | "ISTP" | "ISFP" | "ESFP";
 
-export type DiagnosisResult = { // 診断結果の型
+// 診断結果の型
+export type DiagnosisResult = {
     type: string; // MBTI診断結果(例: "INTJ")
     name: string; // MBTI診断結果の名前(例: "建築家")
     image: string; // MBTI診断結果の画像URL
@@ -17,6 +19,7 @@ export type DiagnosisResult = { // 診断結果の型
     };
 };
 
+// 診断結果のデータ
 export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
     // 分析家タイプ
     "ENTP": {
