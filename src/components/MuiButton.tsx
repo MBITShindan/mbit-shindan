@@ -10,11 +10,6 @@ export const MuiButton = ({ children, ...props }:MainButtonProps ) =>{
         <Button
             color="primary"
             variant="contained"
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
             {...props}
         >
             {children}
