@@ -11,8 +11,9 @@ export default function TitlePage() {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
-                    width: "100vw",
-                    height: "100vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start"
                 }}
             >
                 <MuiButton 
