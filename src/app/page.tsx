@@ -44,6 +44,7 @@ export default function TitlePage() {
                         {/* M */}
                         <Box
                             sx={{
+                                fontFamily: "Roboto",
                                 fontStyle: "italic",
                                 color: "white",
                                 textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)",
@@ -55,6 +56,7 @@ export default function TitlePage() {
                         {/* B */}
                         <Box
                             sx={{
+                                fontFamily: "Roboto",
                                 fontStyle: "italic",
                                 color: "white",
                                 textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)",
@@ -70,6 +72,7 @@ export default function TitlePage() {
                                     position: "absolute",
                                     top: 0,
                                     left: 0,
+                                    fontFamily: "Roboto",
                                     fontStyle: "italic",
                                     color: "black",
                                     textShadow: "0 3px 10px rgba(0, 0, 0, 0.4)",
@@ -81,6 +84,7 @@ export default function TitlePage() {
                             {/* Iのグラデーションレイヤー */}
                             <Box
                                 sx={{
+                                    fontFamily: "Roboto",
                                     background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
                                     WebkitBackgroundClip: "text",
                                     WebkitTextFillColor: "transparent",
@@ -99,6 +103,7 @@ export default function TitlePage() {
                                     position: "absolute",
                                     top: 0,
                                     left: 0,
+                                    fontFamily: "Roboto",
                                     fontStyle: "italic",
                                     color: "black",
                                     textShadow: "0 3px 3px rgba(0, 0, 0, 0.3)",
@@ -110,6 +115,7 @@ export default function TitlePage() {
                             {/* Tグラデーションレイヤー */}
                             <Box
                                 sx={{
+                                    fontFamily: "Roboto",
                                     background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
                                     WebkitBackgroundClip: "text",
                                     WebkitTextFillColor: "transparent",
