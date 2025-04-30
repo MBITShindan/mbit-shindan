@@ -9,7 +9,7 @@ const notoSansJP = Noto_Sans_JP({
   display: 'swap',        // FOUT対策
 });
 
-const roboto = Roboto({
+export const roboto = Roboto({
   weight: ['700'],
   subsets: ['latin'],
   display: 'swap',
