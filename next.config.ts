@@ -9,8 +9,8 @@ const nextConfig: NextConfig = isStaticExport
     // SSRを使用しない場合の設定
     output: "export",
     images: { unoptimized: true },
-    basePath: "/<REPO_NAME>",
-    assetPrefix: "/<REPO_NAME>/",
+    basePath: "/mbit-shindan",
+    assetPrefix: "/mbit-shindan/",
 }
 : {
     reactStrictMode: true,
