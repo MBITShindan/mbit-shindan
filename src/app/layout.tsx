@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Noto_Sans_JP, Roboto } from 'next/font/google';
+import { Noto_Sans_JP } from 'next/font/google';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ['400', '700'], // 必要な重さだけにすると軽量化
   subsets: ['latin'],     // 日本語も対応している（latin でOK）
   display: 'swap',        // FOUT対策
-});
-
-const roboto = Roboto({
-  weight: ['700'],
-  subsets: ['latin'],
-  display: 'swap',
 });
 
 const geistSans = Geist({
