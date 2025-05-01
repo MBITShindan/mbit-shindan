@@ -25,7 +25,7 @@ jobs:
         env:
           BUILD_TARGET: static
         run: |
-          npm run build:static
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
