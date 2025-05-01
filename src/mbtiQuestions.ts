@@ -1,6 +1,7 @@
 // MBTI診断の質問の型
 export type Question = {
     item: string; // オブジェクトの名前
+    // image: string; // 画像のURL
     question: string; // 表示するテキスト
     answers: Answer[]; // 選択肢
 };
