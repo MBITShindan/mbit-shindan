@@ -97,7 +97,7 @@ export default function TitlePage() {
                             </Box>
                         </Box>
 
-                        <Box sx={{ position: "relative", width: "7rem", marginLeft: "-20px" }}>
+                        <Box sx={{ position: "relative", width: "7rem", marginLeft: "-27px" }}>
                             <Box
                                 sx={{
                                     position: "absolute",
