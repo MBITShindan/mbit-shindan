@@ -6,6 +6,8 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function TitlePage() {
     return (
         <AppRouterCacheProvider>
@@ -13,7 +15,7 @@ export default function TitlePage() {
                 sx={{
                     width: "100vw",
                     height: "100vh",
-                    backgroundImage: `url('/Pasuteru.png')`,
+                    backgroundImage: `url('${basePath}/Pasuteru.png')`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",

@@ -17,10 +17,16 @@ const nextConfig: NextConfig = isStaticExport
     images: { unoptimized: true },
     basePath: "/mbit-shindan",
     assetPrefix: "/mbit-shindan/",
+    env: {
+        NEXT_PUBLIC_BASE_PATH: "/mbit-shindan",
+    },
 }
 : {
     // SSRを使用する場合の設定
     ...baseConfig,
+    env: {
+        NEXT_PUBLIC_BASE_PATH: "",
+    },
 };
 
 export default nextConfig;
