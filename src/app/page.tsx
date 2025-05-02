@@ -14,20 +14,22 @@ export default function TitlePage() {
             <Box
                 sx={{
                     width: "100vw",
-                    height: "100vh",
+                    height: "100dvh",
+                    overflow: "hidden",
+                    position: "fixed",
                     backgroundImage: `url('${basePath}/Pasuteru.png')`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     display: "flex",
+                    gap: "1rem",
                     flexDirection: "column",
-                    justifyContent: "flex-start"
+                    justifyContent: "flex-start",
+                    pb: "2rem",
                 }}
             >
                 <Box
                     sx={{
-                        height: "30vh",
-                        width: "100vw",
                         display: "flex",
                         flexDirection: "column",
                         alignItem: "center"
@@ -152,8 +154,7 @@ export default function TitlePage() {
                 <Box
                     color="white"
                     sx={{
-                        height: "15vh",
-                        width: "100vw",
+                        flexGrow: 1,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -163,9 +164,7 @@ export default function TitlePage() {
                             0.3px -0.1px 0 black,
                             0px 0.1px 0 black,
                             0px -0.1px 0 black
-                        `,
-                        mt: "1rem",
-                    
+                        `
                     }}
                 >
                     <Box 
@@ -207,14 +206,11 @@ export default function TitlePage() {
 
                 <Box
                     sx={{
-                        height: "30vh",
-                        width: "100vw",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         flexDirection: "column",
-                        gap: "1rem",
-                        mt: "4rem"
+                        gap: "1rem"
                     }}
                 >
                     <MuiButton
