@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "postexport": "node scripts/adjust-css-paths.mjs",
     "lint": "next lint"
   },
   "dependencies": {
