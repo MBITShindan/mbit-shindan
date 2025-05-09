@@ -5,6 +5,7 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
+import Link from 'next/link';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -223,17 +224,19 @@ export default function TitlePage() {
                         <PlayCircleOutlineIcon sx={{ fontSize: "3.1rem" }} />
                         チュートリアル
                     </MuiButton>
-                    <MuiButton
-                        sx={{
-                            background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
-                            width: "12.5rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <PersonSearchIcon sx={{ fontSize: "3.1rem" }} />
-                        性格診断
-                    </MuiButton>
+                    <Link href="diagnosis">
+                        <MuiButton
+                            sx={{
+                                background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
+                                width: "12.5rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <PersonSearchIcon sx={{ fontSize: "3.1rem" }} />
+                            性格診断
+                        </MuiButton>
+                    </Link>
                     <MuiButton
                         sx={{
                             width: "17rem",
