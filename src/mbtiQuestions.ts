@@ -1,7 +1,7 @@
 // MBTI診断の質問の型
 export type Question = {
     item: string; // オブジェクトの名前
-    // image: string; // 画像のURL
+    image: string; // 画像のURL
     question: string; // 表示するテキスト
     answers: Answer[]; // 選択肢
 };
@@ -19,10 +19,13 @@ export type Answer = {
     point: MBTIPoint[]; // どのタイプに何ポイント加算するか
 };
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 // 質問のデータ
 export const questions: {[item: string]: Question} = {
     "smartphone": {
         item: "スマホ",
+        image: `('${basePath}/smartphone.png')`,
         question: "テーブルの上にスマホが置きっぱなしだ。",
         answers: [
             {
@@ -56,6 +59,7 @@ export const questions: {[item: string]: Question} = {
     },
     "chargingCable": {
         item: "充電ケーブル",
+        image: `('${basePath}/chargingCable.png')`,
         question: "充電ケーブルがカバンの中で絡まりまくっていた。",
         answers: [
             {
@@ -89,6 +93,7 @@ export const questions: {[item: string]: Question} = {
     },
     "socks": {
         item: "靴下",
+        image: `('${basePath}/socks.png')`,
         question: "洗濯かごに、片方だけの靴下が何日も居座っている。",
         answers: [
             {
@@ -122,6 +127,7 @@ export const questions: {[item: string]: Question} = {
     },
     "vendingMachine": {
         item: "自販機",
+        image: `('${basePath}/vendingMachine.png')`,
         question: "ジュースが出てきたのに、取り出し口のカバーで止まってる。",
         answers: [
             {
@@ -155,6 +161,7 @@ export const questions: {[item: string]: Question} = {
     },
     "ballpointPen": {
         item: "ボールペン",
+        image: `('${basePath}/ballpointPen.png')`,
         question: "さっきまで机の上にあったはずのボールペンが、煙のように消えた。",
         answers: [
             {
@@ -188,6 +195,7 @@ export const questions: {[item: string]: Question} = {
     },
     "earphone": {
         item: "イヤホン",
+        image: `('${basePath}/earphone.png')`,
         question: "イヤホンが……ない。あの、片耳だけ音が出ないやつでもいいから、今は音楽が必要なんだ……！",
         answers: [
             {
@@ -221,6 +229,7 @@ export const questions: {[item: string]: Question} = {
     },
     "mugCup": {
         item: "マグカップ",
+        image: `('${basePath}/mugCup.png')`,
         question: "使い慣れたマグカップを落としてしまった。あの取っ手、もう二度と戻らないんだな……。",
         answers: [
             {
@@ -254,6 +263,7 @@ export const questions: {[item: string]: Question} = {
     },
     "book": {
         item: "本",
+        image: `('${basePath}/book.png')`,
         question: "今日はどの本と目が合うかな？",
         answers: [
             {
@@ -287,6 +297,7 @@ export const questions: {[item: string]: Question} = {
     },
     "pc": {
         item: "PC",
+        image: `('${basePath}/pc.png')`,
         question: "机の上に、PCが鎮座している。",
         answers: [
             {
@@ -320,6 +331,7 @@ export const questions: {[item: string]: Question} = {
     },
     "game": {
         item: "ゲーム機",
+        image: `('${basePath}/game.png')`,
         question: "今日はゲーム日和。どの世界に旅立つ？",
         answers: [
             {
@@ -353,6 +365,7 @@ export const questions: {[item: string]: Question} = {
     },
     "movie": {
         item: "映画",
+        image: `('${basePath}/movie.png')`,
         question: "今夜は映画祭。心のスクリーンに流すのは？",
         answers: [
             {
@@ -386,6 +399,7 @@ export const questions: {[item: string]: Question} = {
     },
     "umbrella": {
         item: "傘",
+        image: `('${basePath}/umbrella.png')`,
         question: "雨が降ってきた。あなたは傘を……",
         answers: [
             {
@@ -419,6 +433,7 @@ export const questions: {[item: string]: Question} = {
     },
     "lunchBox": {
         item: "お弁当",
+        image: `('${basePath}/lunchBox.png')`,
         question: "今日のお弁当、どう食べる？",
         answers: [
             {
