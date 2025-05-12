@@ -7,8 +7,6 @@ import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import Link from 'next/link';
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export default function TitlePage() {
     return (
         <AppRouterCacheProvider>
@@ -18,7 +16,7 @@ export default function TitlePage() {
                     height: "100dvh",
                     overflow: "hidden",
                     position: "fixed",
-                    backgroundImage: `url('${basePath}/Pasuteru.png')`,
+                    backgroundImage: "../public/pastel.png",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
