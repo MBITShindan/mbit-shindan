@@ -1,6 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { MuiButton } from "../../components/MuiButton";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { questions } from "../../mbtiQuestions";
+
+const objects: string[] = Object.keys(questions);
 
 export default function diagnosis() {
     return (
@@ -17,7 +20,6 @@ export default function diagnosis() {
                     backgroundRepeat: "no-repeat",
                     display: "flex",
                     flexDirection: "column",
-                    pb: "2rem",
                 }}
             >
                 <Box
@@ -64,7 +66,15 @@ export default function diagnosis() {
                     10
                     </Box>
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "flex-start", width: "100vw" }}>
+                <Grid container spacing={0} style={{flexGrow: 1}}>
+                    {objects.map((object, index) => (
+                        <Grid size={6} key={index}>
+                            {object}
+                        </Grid>
+                    ))}
+                </Grid>
+
+                {/* <Box sx={{ display: "flex", justifyContent: "flex-start", width: "100vw" }}>
                     <MuiButton 
                         sx={{ 
                             width: "6.875rem",
@@ -139,7 +149,7 @@ export default function diagnosis() {
                     }}
                 >
                     a
-                </MuiButton>
+                </MuiButton> */}
             </Box>
         </AppRouterCacheProvider>
     );
