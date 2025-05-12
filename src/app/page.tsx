@@ -52,7 +52,7 @@ export default function TitlePage() {
                                 fontFamily: "Roboto",
                                 fontStyle: "italic",
                                 color: "white",
-                                textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)",
+                                textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
                             }}
                         >
                             M
