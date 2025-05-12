@@ -4,9 +4,18 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { questions } from "../../mbtiQuestions";
 import { useEffect } from "react";
 
+type ObjectItem = {
+    x: number;
+    y: number;
+}
+
 useEffect(() => {
     const objects: string[] = Object.keys(questions);
 }, []);
+
+const objectItems: {[objectName: string]: ObjectItem} = {
+
+}
 
 const objects: string[] = Object.keys(questions);
 
