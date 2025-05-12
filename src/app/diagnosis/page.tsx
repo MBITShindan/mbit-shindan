@@ -45,11 +45,12 @@ export default function diagnosis() {
                     <Box
                         sx={{
                             position: "absolute",
-                            fontSize: "2.375rem",
-                            mr: "3.25rem",
+                            fontSize: "3.5rem",
+                            mt: "-1rem",
+                            mr: "3.5rem",
                             textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
                         }}>
-                    1
+                    10
                     </Box>
                     <Box
                         sx={{
