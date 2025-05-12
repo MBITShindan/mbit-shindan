@@ -11,7 +11,7 @@ export default function diagnosis() {
                     height: "100dvh",
                     overflow: "hidden",
                     position: "fixed",
-                    backgroundImage: "../public/home.png",
+                    backgroundImage: "url('/home.png')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",

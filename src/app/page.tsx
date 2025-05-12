@@ -16,7 +16,7 @@ export default function TitlePage() {
                     height: "100dvh",
                     overflow: "hidden",
                     position: "fixed",
-                    backgroundImage: "../public/pastel.png",
+                    backgroundImage: "url('pastel.png')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
