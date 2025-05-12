@@ -2,6 +2,11 @@ import { Box, Grid } from "@mui/material";
 import { MuiButton } from "../../components/MuiButton";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { questions } from "../../mbtiQuestions";
+import { useEffect } from "react";
+
+useEffect(() => {
+    const objects: string[] = Object.keys(questions);
+}, []);
 
 const objects: string[] = Object.keys(questions);
 
