@@ -9,6 +9,7 @@ const notoSansJP = Noto_Sans_JP({
   display: 'swap',        // FOUT対策
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _roboto = Roboto({
   weight: ['700'],
   subsets: ['latin'],
