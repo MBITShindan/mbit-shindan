@@ -5,7 +5,7 @@ type MainButtonProps = ButtonProps & {
     children: React.ReactNode;
 };
 
-export const MuiButton = ({ children, ...props }:MainButtonProps ) =>{
+export const MuiButton = ({ children,...props }:MainButtonProps ) =>{
     return(
         <Button
             color="primary"

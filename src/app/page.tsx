@@ -1,4 +1,5 @@
 import { MuiButton } from "../components/MuiButton";
+import {MuiRankingButton} from "../components/MuiRankingButton";
 import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
@@ -235,7 +236,7 @@ export default function TitlePage() {
                             性格診断
                         </MuiButton>
                     </Link>
-                    <MuiButton
+                    <MuiRankingButton
                         sx={{
                             width: "17rem",
                             height: "4rem",
@@ -244,8 +245,9 @@ export default function TitlePage() {
                     >
                         <HistoryIcon sx={{ fontSize: "3.1rem" }} />
                         前回の診断結果
-                    </MuiButton>
+                    </MuiRankingButton>
                     <MuiButton
+                        name={"ranking"}
                         sx={{
                             width: "17rem",
                             height: "4rem",
