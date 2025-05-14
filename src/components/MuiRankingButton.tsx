@@ -19,7 +19,7 @@ export const MuiRankingButton = ({ children, ...props }: MainButtonProps) => {
 
   useEffect(() => {
     const checkOrCreateUserId = async () => {
-      let localUserId = localStorage.getItem("userId");
+      const localUserId = localStorage.getItem("userId");
 
       const checkResultStatus = async (id: string) => {
         try {
@@ -27,6 +27,7 @@ export const MuiRankingButton = ({ children, ...props }: MainButtonProps) => {
           if (response.status === 200) {
             const data = await response.json();
             setUserId(id);
+            console.log(userId)
             setCanSubmit(data.resultJudge === true);
           } else if (response.status === 404) {
             // データがない場合は新規IDを生成し保存＋登録
