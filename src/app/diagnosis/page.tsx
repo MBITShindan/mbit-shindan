@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import QuestionObjects from "@/components/QuestionObjects";
 import DiagnosisProgress from "../../components/DiagnosisProgress";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 export async function getItemsFromCookie(): Promise<string[]> {
     const cookieStore = await cookies();
@@ -20,22 +21,24 @@ export default async function diagnosis() {
     const checkedObjects = await getItemsFromCookie();
 
     return (
-        <div
-            style={{
-                width: "100vw",
-                height: "100dvh",
-                overflow: "hidden",
-                position: "fixed",
-                backgroundImage: "url('/home.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                display: "flex",
-                flexDirection: "column",
-            }}
-        >
-            <DiagnosisProgress/>
-            <QuestionObjects checkedObjects={checkedObjects}/>
-        </div>
+        <AppRouterCacheProvider>
+            <div
+                style={{
+                    width: "100vw",
+                    height: "100dvh",
+                    overflow: "hidden",
+                    position: "fixed",
+                    backgroundImage: "url('/home.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
+                <DiagnosisProgress/>
+                <QuestionObjects checkedObjects={checkedObjects}/>
+            </div>
+        </AppRouterCacheProvider>
     );
 }
