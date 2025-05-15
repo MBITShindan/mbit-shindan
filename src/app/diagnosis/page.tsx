@@ -1,17 +1,20 @@
+"use client";
 import { Box, Grid } from "@mui/material";
-import { MuiButton } from "../../components/MuiButton";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { questions } from "../../mbtiQuestions";
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import { useMBTIContext } from "../../context/MBTIContext";
+
+const {value, setValue} = useMBTIContext();
 
 type ObjectItem = {
     x: number;
     y: number;
 }
 
-useEffect(() => {
-    const objects: string[] = Object.keys(questions);
-}, []);
+// useEffect(() => {
+//     const objects: string[] = Object.keys(questions);
+// }, []);
 
 const objectItems: {[objectName: string]: ObjectItem} = {
 
@@ -83,7 +86,7 @@ export default function diagnosis() {
                 <Grid container spacing={0} style={{flexGrow: 1}}>
                     {objects.map((object, index) => (
                         <Grid size={6} key={index}>
-                            {object}
+                            {object}{value}
                         </Grid>
                     ))}
                 </Grid>
