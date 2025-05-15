@@ -9,6 +9,8 @@ type Position = {
     y: number;
 };
 
+const animations = ['animate-breathe1', 'animate-breathe2', 'animate-breathe3'];
+
 export default function QuestionObjects(props: {checkedObjects: string[]}) {
     const { checkedObjects } = props;
     const [ leftObjects, setLeftObjects ] = useState<{[objectName: string]: Position}>({});
@@ -41,6 +43,7 @@ export default function QuestionObjects(props: {checkedObjects: string[]}) {
                             src={`/objects/${object}.png`}
                             alt={object}
                             fill
+                            className={`${animations[Math.floor(Math.random() * animations.length)]}`}
                             style={{
                                 objectFit: "contain",
                                 marginLeft: `${leftObjects[object].x}px`,
