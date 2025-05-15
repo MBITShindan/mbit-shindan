@@ -1,8 +1,6 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { questions } from "../../mbtiQuestions";
-
-const objects: string[] = Object.keys(questions);
+import QuestionObjects from "@/components/QuestionObjects";
 
 export default function diagnosis() {
     return (
@@ -65,13 +63,7 @@ export default function diagnosis() {
                     10
                     </Box>
                 </Box>
-                <Grid container spacing={0} style={{flexGrow: 1}}>
-                    {objects.map((object, index) => (
-                        <Grid size={6} key={index}>
-                            {object}
-                        </Grid>
-                    ))}
-                </Grid>
+                <QuestionObjects/>
             </Box>
         </AppRouterCacheProvider>
     );
