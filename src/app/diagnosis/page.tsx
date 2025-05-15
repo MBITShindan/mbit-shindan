@@ -1,70 +1,41 @@
-import { Box } from "@mui/material";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { cookies } from "next/headers";
 import QuestionObjects from "@/components/QuestionObjects";
+import DiagnosisProgress from "../../components/DiagnosisProgress";
 
-export default function diagnosis() {
+export async function getItemsFromCookie(): Promise<string[]> {
+    const cookieStore = await cookies();
+    const raw = cookieStore.get("checkedObjects")?.value;
+
+    try {
+        const parsed = JSON.parse(raw || "[]");
+        if (Array.isArray(parsed) && parsed.every(item => typeof item === "string")) {
+            return parsed;
+        }
+    } catch {};
+
+    return []
+}
+
+export default async function diagnosis() {
+    const checkedObjects = await getItemsFromCookie();
+
     return (
-        <AppRouterCacheProvider>
-            <Box
-                sx={{
-                    width: "100vw",
-                    height: "100dvh",
-                    overflow: "hidden",
-                    position: "fixed",
-                    backgroundImage: "url('/home.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    display: "flex",
-                    flexDirection: "column",
-                }}
-            >
-                <Box
-                    sx={{ 
-                        display: "flex", 
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        position: "relative",
-                        width: "100vw",
-                        height: "6.875rem",
-                        color: "white"
-                    }}
-                >
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            fontSize: "4.75rem",
-                            mt: "-1rem",
-                            width: "5rem",
-                            textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
-                        }}
-                    >
-                    ／
-                    </Box>
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            fontSize: "3.5rem",
-                            mt: "-1rem",
-                            mr: "3.5rem",
-                            textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
-                        }}>
-                    10
-                    </Box>
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            fontSize: "2.375rem",
-                            mt: "1.8rem",
-                            ml: "3rem",
-                            textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
-                        }}
-                    >
-                    10
-                    </Box>
-                </Box>
-                <QuestionObjects/>
-            </Box>
-        </AppRouterCacheProvider>
+        <div
+            style={{
+                width: "100vw",
+                height: "100dvh",
+                overflow: "hidden",
+                position: "fixed",
+                backgroundImage: "url('/home.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                display: "flex",
+                flexDirection: "column",
+            }}
+        >
+            <DiagnosisProgress/>
+            <QuestionObjects checkedObjects={checkedObjects}/>
+        </div>
     );
 }
