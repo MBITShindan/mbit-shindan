@@ -1,24 +1,6 @@
-"use client";
 import { Box, Grid } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { questions } from "../../mbtiQuestions";
-// import { useEffect } from "react";
-import { useMBTIContext } from "../../context/MBTIContext";
-
-const {value, setValue} = useMBTIContext();
-
-type ObjectItem = {
-    x: number;
-    y: number;
-}
-
-// useEffect(() => {
-//     const objects: string[] = Object.keys(questions);
-// }, []);
-
-const objectItems: {[objectName: string]: ObjectItem} = {
-
-}
 
 const objects: string[] = Object.keys(questions);
 
@@ -86,87 +68,10 @@ export default function diagnosis() {
                 <Grid container spacing={0} style={{flexGrow: 1}}>
                     {objects.map((object, index) => (
                         <Grid size={6} key={index}>
-                            {object}{value}
+                            {object}
                         </Grid>
                     ))}
                 </Grid>
-
-                {/* <Box sx={{ display: "flex", justifyContent: "flex-start", width: "100vw" }}>
-                    <MuiButton 
-                        sx={{ 
-                            width: "6.875rem",
-                            height: "7rem",
-                            ml: "2rem"
-                        }}
-                    >
-                        a
-                    </MuiButton>
-                </Box>
-                <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100vw" }}>
-                    <MuiButton 
-                        sx={{ 
-                            width: "6.875rem",
-                            height: "9rem",
-                            ml: "16rem"
-                        }}
-                    >
-                        a
-                    </MuiButton>
-                </Box>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "2rem"
-                    }}
-                >
-                    a
-                </MuiButton>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "16rem"
-                    }}
-                >
-                    a
-                </MuiButton>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "2rem"
-                    }}
-                >
-                    a
-                </MuiButton>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "16rem"
-                    }}
-                >
-                    a
-                </MuiButton>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "2rem"
-                    }}
-                >
-                    a
-                </MuiButton>
-                <MuiButton 
-                    sx={{ 
-                        width: "6.875rem",
-                        height: "9rem",
-                        ml: "16rem"
-                    }}
-                >
-                    a
-                </MuiButton> */}
             </Box>
         </AppRouterCacheProvider>
     );
