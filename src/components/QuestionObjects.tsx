@@ -21,16 +21,16 @@ export default function QuestionObjects(props: {checkedObjects: string[]}) {
                 <Grid
                     key={index}
                     size={6}
-                    sx={{
-                        position: "relative"
-                    }}
+                    className="p-6"
                 >
-                    <Image
+                    <div className="relative w-full h-full">
+                        <Image
                         src={`/objects/${object}.png`}
                         alt={object}
                         fill
                         style={{ objectFit: "contain" }}
                     />
+                    </div>
                 </Grid>
             ))}
         </Grid>
