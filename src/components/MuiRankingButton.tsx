@@ -1,84 +1,70 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { Button, ButtonProps } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
+import { Button } from "@mui/material";
+import HistoryIcon from '@mui/icons-material/History';
 
-type MainButtonProps = ButtonProps & {
-  children: React.ReactNode;
+type Props = {
+  userId: string;
 };
 
-export const MuiRankingButton = ({ children, ...props }: MainButtonProps) => {
+export const MuiRankingButton = ({ userId }: Props) => {
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
+
+  // 診断結果をチェック
+  const checkStatus = async (id: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`https://btxzrvour5uubzpdyfs7nonphm0labwz.lambda-url.ap-northeast-1.on.aws/?userId=${id}`);
+      if (res.ok) {
+        const data = await res.json();
+        const resultFound = typeof data.resultJudge !== "undefined";
+        setCanSubmit(data.resultJudge === true);
+        return resultFound;
+      } else {
+        console.warn("診断チェック失敗（ステータスエラー）");
+        return false;
+      }
+    } catch (e) {
+      console.error("診断結果確認エラー:", e);
+      return false;
+    }
+  };
+
+  // ユーザーIDを登録
+  const registerUserId = async (id: string) => {
+    try {
+      const response = await fetch("https://pslak2jsxzxclxuou7sk37s7ia0jnegm.lambda-url.ap-northeast-1.on.aws/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: id }),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        console.error("登録失敗:", result.message || result);
+      } else {
+        console.log("登録成功:", result.message);
+      }
+    } catch (error) {
+      console.error("ユーザーID登録エラー:", error);
+    }
+  };
+
+  useEffect(() => {
+    const run = async () => {
+      const hasResult = await checkStatus(userId);
+      if (!hasResult) {
+        // 診断結果が存在しなければ登録
+        await registerUserId(userId);
+      }
+    };
+    run();
+  }, [userId]);
 
   const handleClick = () => {
     router.push("/result");
   };
-
-  useEffect(() => {
-    const checkOrCreateUserId = async () => {
-      const localUserId = localStorage.getItem("userId");
-
-      const checkResultStatus = async (id: string) => {
-        try {
-          const response = await fetch(`https://btxzrvour5uubzpdyfs7nonphm0labwz.lambda-url.ap-northeast-1.on.aws/?userId=${id}`);
-          if (response.status === 200) {
-            const data = await response.json();
-            setUserId(id);
-            console.log(userId)
-            setCanSubmit(data.resultJudge === true);
-          } else if (response.status === 404) {
-            // データがない場合は新規IDを生成し保存＋登録
-            const newId = uuidv4();
-            localStorage.setItem("userId", newId);
-            setUserId(newId);
-            await registerUserId(newId);
-            setCanSubmit(false);
-          } else {
-            console.error("想定外のエラー:", await response.text());
-            setCanSubmit(false);
-          }
-        } catch (error) {
-          console.error("APIエラー:", error);
-          setCanSubmit(false);
-        }
-      };
-
-      const registerUserId = async (id: string) => {
-        try {
-          const response = await fetch("https://pslak2jsxzxclxuou7sk37s7ia0jnegm.lambda-url.ap-northeast-1.on.aws/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: id }),
-          });
-
-          const result = await response.json();
-          if (!response.ok) {
-            console.error("登録失敗:", result.message || result);
-          } else {
-            console.log("登録成功:", result.message);
-          }
-        } catch (error) {
-          console.error("ユーザーID登録エラー:", error);
-        }
-      };
-
-      if (localUserId) {
-        await checkResultStatus(localUserId);
-      } else {
-        // 念のためなかった場合も生成処理に回す
-        const newId = uuidv4();
-        localStorage.setItem("userId", newId);
-        setUserId(newId);
-        await registerUserId(newId);
-        setCanSubmit(false);
-      }
-    };
-
-    checkOrCreateUserId();
-  }, []);
 
   return (
     <Button
@@ -86,9 +72,14 @@ export const MuiRankingButton = ({ children, ...props }: MainButtonProps) => {
       variant="contained"
       onClick={canSubmit ? handleClick : undefined}
       disabled={!canSubmit}
-      {...props}
+      sx={{
+        width: "17rem",
+        height: "4rem",
+        fontSize: "1.6rem"
+      }}
     >
-      {children}
+      <HistoryIcon sx={{ fontSize: "3.1rem" }} />
+      前回の診断結果
     </Button>
   );
 };

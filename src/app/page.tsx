@@ -4,11 +4,13 @@ import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import Link from 'next/link';
+import { cookies } from "next/headers";
 
-export default function TitlePage() {
+export default async function TitlePage() {
+  const cookieStore = await cookies();
+  const userId = cookieStore.get("userId")?.value;
     return (
         <AppRouterCacheProvider>
             <Box
@@ -236,16 +238,7 @@ export default function TitlePage() {
                             性格診断
                         </MuiButton>
                     </Link>
-                    <MuiRankingButton
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <HistoryIcon sx={{ fontSize: "3.1rem" }} />
-                        前回の診断結果
-                    </MuiRankingButton>
+                    {userId && <MuiRankingButton userId={userId} />}
                     <MuiButton
                         name={"ranking"}
                         sx={{
