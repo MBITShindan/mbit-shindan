@@ -90,11 +90,13 @@ export default function QuestionObjects(props: {
                                     src={`/objects/${object.id}.png`}
                                     alt={object.id}
                                     fill
+                                    sizes="50px"
                                     className="animate-breathe"
                                     style={{
                                         objectFit: "contain",
                                         filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
                                     }}
+                                    priority={true}
                                 />
                             </button>
                         )}
