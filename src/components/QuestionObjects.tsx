@@ -1,4 +1,5 @@
 "use client";
+import { Dispatch, SetStateAction } from "react";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { Grid } from "@mui/material";
@@ -19,8 +20,14 @@ function getRandomPosition() {
 
 const animations = ['animate-breathe1', 'animate-breathe2', 'animate-breathe3'];
 
-export default function QuestionObjects(props: {checkedList: string[]}) {
-    const { checkedList } = props;
+export default function QuestionObjects(props: {
+    checkedList: string[]
+    setCheckedList: Dispatch<SetStateAction<string[]>>
+}) {
+    const {
+        checkedList,
+        setCheckedList
+    } = props;
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]);
 
     // 画面が表示されたときに、checkedListに含まれないオブジェクトをランダムに8個選択して表示する
@@ -38,14 +45,17 @@ export default function QuestionObjects(props: {checkedList: string[]}) {
 
     // index番目のオブジェクトを変更する関数
     // ここでは、checkedListに含まれないオブジェクトをランダムに1個選択して追加する
-    function updateObject(index: number) {
+    function updateObject(index: number, checkedId: string) {
         const newObjects = [...leftObjects];
         let newObject: Position | null = null;
 
         // ランダムに1個選択して置き換える
         // もし、追加できるオブジェクトがなければ、nullで置き換える
         const objects: string[] = Object.keys(questions);
-        const filtered = objects.filter(item => !checkedList.includes(item));
+        const leftList = newObjects.filter(item => item !== null).map(item => item?.id);
+        const showedList = leftList.concat(checkedList); // すでに表示されたことのあるオブジェクトのリスト
+        console.log("showedList", showedList);
+        const filtered = objects.filter(item => !showedList.includes(item));
         if (filtered.length > 0) {
             const selected = filtered.sort(() => Math.random() - 0.5).slice(0, 1);
             newObject = {
@@ -56,6 +66,7 @@ export default function QuestionObjects(props: {checkedList: string[]}) {
 
         newObjects[index] = newObject;
         setLeftObjects(newObjects);
+        setCheckedList((prev) => [...prev, checkedId]);
     }
 
 
@@ -67,19 +78,26 @@ export default function QuestionObjects(props: {checkedList: string[]}) {
                     size={6}
                     className="p-6"
                 >
-                    <div className="relative w-full h-full">
+                    <div className="w-full h-full">
                         {object && (
-                            <Image
-                                src={`/objects/${object.id}.png`}
-                                alt={object.id}
-                                fill
-                                className={`${animations[Math.floor(Math.random() * animations.length)]}`}
+                            <button
+                                className="relative w-full h-full"
                                 style={{
-                                    objectFit: "contain",
                                     marginLeft: `${object.x}px`,
                                     marginTop: `${object.y}px`
                                 }}
-                            />
+                                onClick={() => updateObject(index, object.id)}
+                            >
+                                <Image
+                                    src={`/objects/${object.id}.png`}
+                                    alt={object.id}
+                                    fill
+                                    className={`${animations[Math.floor(Math.random() * animations.length)]}`}
+                                    style={{
+                                        objectFit: "contain",
+                                    }}
+                                />
+                            </button>
                         )}
                     </div>
                 </Grid>

@@ -27,7 +27,7 @@ export default function DiagnosisBox(props: {checkedObjects: string[]}) {
             }}
         >
             <DiagnosisProgress checkedCount={checkedList.length}/>
-            <QuestionObjects checkedList={checkedList}/>
+            <QuestionObjects checkedList={checkedList} setCheckedList={setCheckedList}/>
         </div>
     );
 }
