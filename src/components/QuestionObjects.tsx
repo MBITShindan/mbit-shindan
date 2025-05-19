@@ -39,7 +39,7 @@ export default function QuestionObjects(props: {checkedObjects: string[]}) {
                     className="p-6"
                 >
                     <div className="relative w-full h-full">
-                        <Image
+                        <Image // TODO: 光らせるアニメーションを追加する
                             src={`/objects/${object}.png`}
                             alt={object}
                             fill
