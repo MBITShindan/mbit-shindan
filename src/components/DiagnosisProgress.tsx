@@ -1,7 +1,9 @@
 "use client";
 import { Box } from "@mui/material";
 
-export default function DiagnosisProgress() {
+export default function DiagnosisProgress(props: {checkedCount: number}) {
+    const { checkedCount } = props;
+
     return (
         <Box
             sx={{ 
@@ -33,7 +35,7 @@ export default function DiagnosisProgress() {
                     mr: "3.5rem",
                     textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
                 }}>
-            10
+            {checkedCount}
             </Box>
             <Box
                 sx={{

@@ -11,13 +11,13 @@ type Position = {
 
 const animations = ['animate-breathe1', 'animate-breathe2', 'animate-breathe3'];
 
-export default function QuestionObjects(props: {checkedObjects: string[]}) {
-    const { checkedObjects } = props;
+export default function QuestionObjects(props: {checkedList: string[]}) {
+    const { checkedList } = props;
     const [ leftObjects, setLeftObjects ] = useState<{[objectName: string]: Position}>({});
 
     useEffect(() => {
         const objects: string[] = Object.keys(questions);
-        const filtered = objects.filter(item => !checkedObjects.includes(item));
+        const filtered = objects.filter(item => !checkedList.includes(item));
         const selected = filtered.sort(() => Math.random() - 0.5).slice(0, 8);
         // xとyの値をランダムに-30から30の範囲で生成
         const positions: {[objectName: string]: Position} = {};
