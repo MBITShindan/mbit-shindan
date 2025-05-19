@@ -18,8 +18,6 @@ function getRandomPosition() {
     return { x, y };
 }
 
-const animations = ['animate-breathe1', 'animate-breathe2', 'animate-breathe3'];
-
 export default function QuestionObjects(props: {
     checkedList: string[]
     setCheckedList: Dispatch<SetStateAction<string[]>>
@@ -92,9 +90,10 @@ export default function QuestionObjects(props: {
                                     src={`/objects/${object.id}.png`}
                                     alt={object.id}
                                     fill
-                                    className={`${animations[Math.floor(Math.random() * animations.length)]}`}
+                                    className="animate-breathe"
                                     style={{
                                         objectFit: "contain",
+                                        filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
                                     }}
                                 />
                             </button>
