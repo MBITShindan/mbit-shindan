@@ -18,7 +18,7 @@ export default function DiagnosisBox(props: {checkedObjects: string[]}) {
                 height: "100dvh",
                 overflow: "hidden",
                 position: "fixed",
-                backgroundImage: "url('/home.png')",
+                backgroundImage: "url('home.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
