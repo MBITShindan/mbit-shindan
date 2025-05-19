@@ -3,32 +3,26 @@
 import React from "react";
 import { 
     Button, 
-    ButtonProps,
     Box,
 } from "@mui/material";
 import { useState } from "react"
 import { questions } from "../mbtiQuestions"
+import { Dispatch, SetStateAction } from "react";
 
-type MainButtonProps = ButtonProps & {
-    children: React.ReactNode;
-    questionsKey: string;
+type MainButtonProps = {
+    selectedId: string | null
+    setSelectedId: Dispatch<SetStateAction<string | null>>;
 };
 
-export const ModelButton = ({ children, questionsKey,...props }:MainButtonProps ) =>{
-    const [open, setOpen] = useState(false);
-    const questionsData = questions[questionsKey]
+export const ModelButton = (props: MainButtonProps ) => {
+    const {
+        selectedId,
+        setSelectedId
+    } = props;
 
     return(
         <>
-            <Button
-                color="primary"
-                variant="contained"
-                onClick={() => setOpen(true)}
-                {...props}
-            >
-                {children}
-            </Button>
-            {open && (
+            {selectedId && (
                 <Box
                     sx={{
                     position: 'fixed',
@@ -52,13 +46,13 @@ export const ModelButton = ({ children, questionsKey,...props }:MainButtonProps 
                                     borderRadius: 6,
                                 }}
                             >
-                                <Box>{questionsData.question}</Box>
+                                <Box>{questions[selectedId].question}</Box>
                             </Box>
 
-                        {Object.entries(questionsData.answers).map(([key,value],index:number) => (
+                        {Object.entries(questions[selectedId].answers).map(([key,value],index:number) => (
                             <Button
                                 key={index}
-                                onClick={() => setOpen(false)}
+                                onClick={() => setSelectedId(null)}
                                 sx={{
                                     background: 'primary',
                                     height: "5rem",

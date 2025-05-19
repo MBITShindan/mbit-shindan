@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
+import { ModelButton } from "./ModelButton";
 
 type Position = {
     id: string;
@@ -27,6 +28,7 @@ export default function QuestionObjects(props: {
         setCheckedList
     } = props;
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]);
+    const [ selectedId, setSelectedId ] = useState<string | null>(null);
 
     // 画面が表示されたときに、checkedListに含まれないオブジェクトをランダムに8個選択して表示する
     useEffect(() => {
