@@ -23,11 +23,7 @@ export type Answer = {
 export const questions: {[item: string]: Question} = {
     "smartphone": {
         item: "スマホ",
-<<<<<<< HEAD
-        image: "/objects/smartphone.png",
-=======
         image: "url('/objects/smartphone.png')",
->>>>>>> origin/feature/Home
         question: "テーブルの上にスマホが置きっぱなしだ。",
         answers: [
             {
