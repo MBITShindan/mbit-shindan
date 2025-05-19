@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import DiagnosisBox from "../../components/DiagnosisBox";
 
-export async function getItemsFromCookie(): Promise<string[]> {
+async function getItemsFromCookie(): Promise<string[]> {
     const cookieStore = await cookies();
     const raw = cookieStore.get("checkedObjects")?.value;
 
