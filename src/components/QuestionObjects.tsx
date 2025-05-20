@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
-import { ModelButton } from "./ModelButton";
+import { ModelButton } from "./ModalButton";
 
 type Position = {
     id: string;
