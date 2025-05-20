@@ -5,7 +5,6 @@ import {
     Button, 
     Box,
 } from "@mui/material";
-import { useState } from "react"
 import { questions } from "../mbtiQuestions"
 import { Dispatch, SetStateAction } from "react";
 
@@ -19,7 +18,6 @@ export const ModelButton = (props: MainButtonProps ) => {
         selectedId,
         setSelectedId
     } = props;
-
     return(
         <>
             {selectedId && (
@@ -28,6 +26,8 @@ export const ModelButton = (props: MainButtonProps ) => {
                     position: 'fixed',
                     display: 'flex',
                     flexDirection: 'column',
+                    itemAlign: "center",
+                    justifyContent: "center",
                     top: "0",
                     left: "0",
                     width: '100vw',
@@ -36,36 +36,36 @@ export const ModelButton = (props: MainButtonProps ) => {
                     zIndex: 10,
                     }}
                 >
-                    <Box>
-                        <Box
-                                style={{
-                                    background: 'white',
-                                    padding: 27,
-                                    width: "18.75rem",
-                                    margin: '10% auto',
-                                    borderRadius: 6,
-                                }}
-                            >
-                                <Box>{questions[selectedId].question}</Box>
-                            </Box>
+                    <Box
+                            style={{
+                                background: 'white',
+                                padding: 27,
+                                width: "85vw",
+                                margin: '10% auto',
+                                borderRadius: 6,
+                            }}
+                        >
+                            <Box>{questions[selectedId].question}</Box>
+                        </Box>
 
-                        {Object.entries(questions[selectedId].answers).map(([key,value],index:number) => (
+                    {Object.entries(questions[selectedId].answers).map(([key,value],index:number) => (
+                        <Box className="flex col items-center justify-center">
                             <Button
                                 key={index}
                                 onClick={() => setSelectedId(null)}
                                 sx={{
-                                    background: 'primary',
+                                    background: 'rgba(206, 235, 255, 1)',
                                     height: "5rem",
                                     width: "18.75rem",
-                                    margin: '5% auto',
                                     borderRadius: 2,
-                                    color: "black"
+                                    color: "black",
+                                    mt: "2rem"
                                 }}
                             >
                                 {value.answer}
                             </Button>
-                        ))}
-                    </Box>
+                        </Box>
+                    ))}
                 </Box>
             )}
         </>

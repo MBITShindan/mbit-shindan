@@ -71,6 +71,7 @@ export default function QuestionObjects(props: {
 
 
     return (
+        <>
         <Grid container spacing={0} style={{flexGrow: 1}}>
             {(leftObjects).map((object, index) => (
                 <Grid
@@ -86,7 +87,10 @@ export default function QuestionObjects(props: {
                                     marginLeft: `${object.x}px`,
                                     marginTop: `${object.y}px`
                                 }}
-                                onClick={() => updateObject(index, object.id)}
+                                onClick={() => {
+                                                setSelectedId(object.id);
+                                                updateObject(index, object.id)
+                                                } }
                             >
                                 <Image
                                     src={`/objects/${object.id}.png`}
@@ -104,5 +108,10 @@ export default function QuestionObjects(props: {
                 </Grid>
             ))}
         </Grid>
+        <ModelButton 
+            selectedId={selectedId} 
+            setSelectedId={setSelectedId} 
+        />
+        </>
     );
 }
