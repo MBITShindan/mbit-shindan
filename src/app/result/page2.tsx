@@ -8,13 +8,13 @@ import { diagnosisResults } from '../../diagnosisResults';
 import { notFound } from 'next/navigation';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-export default function Page({ params }: { params: { personality: string } }) {
-      console.log("クエリパラメータ type: <strong>"+params.personality+"</strong>")
-//   return (
-//     <div>
-//       性格タイプ: {params.personality}
-//     </div>
-//   );
+export default function TestPage({
+  searchParams,
+}: {
+  searchParams: { type?: string };
+}) {
+  const type = searchParams.type ?? 'default';
+  console.log("クエリパラメータ type: <strong>"+type+"</strong>")
   return (
         <AppRouterCacheProvider>
             <Box
