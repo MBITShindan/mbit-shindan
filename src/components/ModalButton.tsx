@@ -11,12 +11,14 @@ import { Dispatch, SetStateAction } from "react";
 type MainButtonProps = {
     selectedId: string | null
     setSelectedId: Dispatch<SetStateAction<string | null>>;
+    checkedList: string[];
 };
 
 export const ModelButton = (props: MainButtonProps ) => {
     const {
         selectedId,
-        setSelectedId
+        setSelectedId,
+        checkedList
     } = props;
     return(
         <>
@@ -48,11 +50,18 @@ export const ModelButton = (props: MainButtonProps ) => {
                             <Box>{questions[selectedId].question}</Box>
                         </Box>
 
-                    {Object.entries(questions[selectedId].answers).map(([key,value],index:number) => (
-                        <Box className="flex col items-center justify-center">
+                    {Object.entries(questions[selectedId].answers).map(([answerKey,value]) => (
+                        <Box 
+                            className="flex col items-center justify-center"
+                            key={answerKey}
+                        >
                             <Button
-                                key={index}
-                                onClick={() => setSelectedId(null)}
+                                onClick={() => {
+                                    setSelectedId(null), 
+                                    //cookieに値を挿入(一週間後に消えるようになってます。)
+                                    document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
+                                    console.log(document.cookie);
+                                }}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
                                     height: "5rem",
