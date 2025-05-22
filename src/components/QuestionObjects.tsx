@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
+import { ModelButton } from "./ModalButton";
 
 type Position = {
     id: string;
@@ -18,18 +19,53 @@ function getRandomPosition() {
     return { x, y };
 }
 
-export default function QuestionObjects(props: {
-    checkedList: string[]
-    setCheckedList: Dispatch<SetStateAction<string[]>>
-}) {
+type Props ={
+    checkedList: string[];
+    setCheckedList: Dispatch<SetStateAction<string[]>>;
+}
+
+export default function QuestionObjects(props: Props) {
     const {
         checkedList,
         setCheckedList
     } = props;
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]);
+    const [ selectedId, setSelectedId ] = useState<string | null>(null);
+    const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null);
+    const [ isReady, setIsReady ] = useState<true | false>(false);
+    const [ cookieValueBox, setCookieValueBox ] = useState<string | undefined>(undefined);
 
-    // 画面が表示されたときに、checkedListに含まれないオブジェクトをランダムに8個選択して表示する
+    // cookieの取得
     useEffect(() => {
+    document.cookie;
+    const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('currentProgress='))
+        ?.split('=')[1];
+        setCookieValueBox(cookieValue)
+    },[])
+
+    useEffect(() => {
+        if (cookieValueBox) {
+            try {
+                setCookieCheckedList(JSON.parse(decodeURIComponent(cookieValueBox)));
+                console.log("cookieが取得できています"+ checkedList)
+            } catch (e) {
+                console.error("クッキーのデコードに失敗:", e);
+            }
+        }
+    }, [cookieValueBox]);
+
+    useEffect(() => {
+        if (cookieCheckedList) {
+            setCheckedList([...cookieCheckedList]);
+            console.log(cookieCheckedList);
+            setIsReady(true);
+        }
+    }, [cookieCheckedList]);
+
+    useEffect(() => {
+    // 画面が表示されたときに、checkedListに含まれないオブジェクトをランダムに8個選択して表示する
         const objects: string[] = Object.keys(questions);
         const filtered = objects.filter(item => !checkedList.includes(item));
         const selected = filtered.sort(() => Math.random() - 0.5).slice(0, 8);
@@ -39,7 +75,7 @@ export default function QuestionObjects(props: {
             ...getRandomPosition()
         }));
         setLeftObjects(positions);
-    }, []);
+    }, [isReady]);
 
     // index番目のオブジェクトを変更する関数
     // ここでは、checkedListに含まれないオブジェクトをランダムに1個選択して追加する
@@ -67,8 +103,8 @@ export default function QuestionObjects(props: {
         setCheckedList((prev) => [...prev, checkedId]);
     }
 
-
     return (
+        <>
         <Grid container spacing={0} style={{flexGrow: 1}}>
             {(leftObjects).map((object, index) => (
                 <Grid
@@ -84,7 +120,10 @@ export default function QuestionObjects(props: {
                                     marginLeft: `${object.x}px`,
                                     marginTop: `${object.y}px`
                                 }}
-                                onClick={() => updateObject(index, object.id)}
+                                onClick={() => {
+                                    setSelectedId(object.id);
+                                    updateObject(index, object.id)
+                                    } }
                             >
                                 <Image
                                     src={`/objects/${object.id}.png`}
@@ -104,5 +143,11 @@ export default function QuestionObjects(props: {
                 </Grid>
             ))}
         </Grid>
+        <ModelButton 
+            selectedId={selectedId} 
+            setSelectedId={setSelectedId}
+            checkedList={checkedList}
+        />
+        </>
     );
 }
