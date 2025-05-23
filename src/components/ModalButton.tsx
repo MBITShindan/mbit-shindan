@@ -1,6 +1,5 @@
-'use client';
-
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { 
     Button, 
     Box,
@@ -12,14 +11,35 @@ type MainButtonProps = {
     selectedId: string | null
     setSelectedId: Dispatch<SetStateAction<string | null>>;
     checkedList: string[];
+    selectedIndex: number | null;
+    updateObject: (index: number, checkedId: string) => void;
 };
 
-export const ModelButton = (props: MainButtonProps ) => {
+export const ModelButton = (props: MainButtonProps) => {
     const {
         selectedId,
         setSelectedId,
-        checkedList
+        checkedList,
+        selectedIndex,
+        updateObject
     } = props;
+
+    const [isTapped, setIsTapped] = useState<number | null>(null); // 押した感のアニメーションを再生するためのフラグ
+
+    // クリックしたときの処理
+    // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
+    function handleTap(answerIndex: number){
+        setIsTapped(answerIndex);
+        setTimeout(() => {
+            //cookieに値を挿入(一週間後に消える)
+            document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
+            console.log(document.cookie);
+            setIsTapped(null);
+            setSelectedId(null);
+            updateObject(selectedIndex!, selectedId!)
+        }, 250);
+    };
+
     return(
         <>
             {selectedId && (
@@ -39,29 +59,25 @@ export const ModelButton = (props: MainButtonProps ) => {
                     }}
                 >
                     <Box
-                            style={{
-                                background: 'white',
-                                padding: 27,
-                                width: "85vw",
-                                margin: '10% auto',
-                                borderRadius: 6,
-                            }}
-                        >
-                            <Box>{questions[selectedId].question}</Box>
-                        </Box>
+                        style={{
+                            background: 'white',
+                            padding: 27,
+                            width: "85vw",
+                            margin: '10% auto',
+                            borderRadius: 6,
+                        }}
+                    >
+                        <Box>{questions[selectedId].question}</Box>
+                    </Box>
 
-                    {Object.entries(questions[selectedId].answers).map(([answerKey,value]) => (
+                    {questions[selectedId].answers.map((value, index) => (
                         <Box 
                             className="flex col items-center justify-center"
-                            key={answerKey}
+                            key={index}
                         >
                             <Button
-                                onClick={() => {
-                                    setSelectedId(null);
-                                    //cookieに値を挿入(一週間後に消えるようになってます。)
-                                    document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
-                                    console.log(document.cookie);
-                                }}
+                                className={isTapped === index ? "scale-90 shadow-inner" : "scale-100"}
+                                onClick={() => handleTap(index)}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
                                     height: "5rem",
