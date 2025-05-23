@@ -1,9 +1,12 @@
 import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { cookies } from "next/headers";
+import { ENDPOINTS } from "../../lib/constants";
 
 export default async function RankingPage() {
-    const cookieStore = await cookies();
+    const res = await fetch(`${ENDPOINTS.rankings}`, {
+        // cache: 'no-store',
+    });
+    const data = await res.json();
 
     return (
         <AppRouterCacheProvider>
@@ -24,6 +27,7 @@ export default async function RankingPage() {
                     pb: "2rem",
                 }}
             >
+                {JSON.stringify(data, null, 2)}
             </Box>
         </AppRouterCacheProvider>
     );

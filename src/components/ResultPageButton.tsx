@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Button } from "@mui/material";
 import HistoryIcon from '@mui/icons-material/History';
+import { ENDPOINTS } from "../lib/constants";
 
 type Props = {
   userId: string;
@@ -15,7 +16,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   // 診断結果をチェック
   const checkStatus = async (id: string): Promise<boolean> => {
     try {
-      const res = await fetch(`https://btxzrvour5uubzpdyfs7nonphm0labwz.lambda-url.ap-northeast-1.on.aws/?userId=${id}`);
+      const res = await fetch(`${ENDPOINTS.results}/?userId=${id}`);
       if (res.ok) {
         const data = await res.json();
         const resultFound = typeof data.resultJudge !== "undefined";
@@ -34,7 +35,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   // ユーザーIDを登録
   const registerUserId = async (id: string) => {
     try {
-      const response = await fetch("https://pslak2jsxzxclxuou7sk37s7ia0jnegm.lambda-url.ap-northeast-1.on.aws/", {
+      const response = await fetch(ENDPOINTS.user.creation, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: id }),
