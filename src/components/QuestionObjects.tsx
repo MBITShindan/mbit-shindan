@@ -31,6 +31,7 @@ export default function QuestionObjects(props: Props) {
     } = props;
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]);
     const [ selectedId, setSelectedId ] = useState<string | null>(null);
+    const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null);
     const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null);
     const [ isReady, setIsReady ] = useState<true | false>(false);
     const [ cookieValueBox, setCookieValueBox ] = useState<string | undefined>(undefined);
@@ -101,51 +102,54 @@ export default function QuestionObjects(props: Props) {
         newObjects[index] = newObject;
         setLeftObjects(newObjects);
         setCheckedList((prev) => [...prev, checkedId]);
+        setSelectedIndex(null);
     }
 
     return (
         <>
-        <Grid container spacing={0} style={{flexGrow: 1}}>
-            {(leftObjects).map((object, index) => (
-                <Grid
-                    key={index}
-                    size={6}
-                    className="p-6"
-                >
-                    <div className="w-full h-full">
-                        {object && (
-                            <button
-                                className="relative w-full h-full"
-                                style={{
-                                    marginLeft: `${object.x}px`,
-                                    marginTop: `${object.y}px`
-                                }}
-                                onClick={() => {
-                                    setSelectedId(object.id);
-                                    updateObject(index, object.id)
-                                    } }
-                            >
-                                <Image
-                                    src={`/objects/${object.id}.png`}
-                                    alt={object.id}
-                                    fill
-                                    className="animate-breathe"
+            <Grid container spacing={0} style={{flexGrow: 1}}>
+                {(leftObjects).map((object, index) => (
+                    <Grid
+                        key={index}
+                        size={6}
+                        className="p-6"
+                    >
+                        <div className="w-full h-full">
+                            {object && (
+                                <button
+                                    className="relative w-full h-full"
                                     style={{
-                                        objectFit: "contain",
-                                        filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
+                                        marginLeft: `${object.x}px`,
+                                        marginTop: `${object.y}px`
                                     }}
-                                />
-                            </button>
-                        )}
-                    </div>
-                </Grid>
-            ))}
-        </Grid>
-        <ModelButton 
-            selectedId={selectedId} 
-            setSelectedId={setSelectedId}
-            checkedList={checkedList}
-        />
+                                    onClick={() => {
+                                        setSelectedId(object.id);
+                                        setSelectedIndex(index);
+                                    }}
+                                >
+                                    <Image
+                                        src={`/objects/${object.id}.png`}
+                                        alt={object.id}
+                                        fill
+                                        className="animate-breathe"
+                                        style={{
+                                            objectFit: "contain",
+                                            filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
+                                        }}
+                                    />
+                                </button>
+                            )}
+                        </div>
+                    </Grid>
+                ))}
+            </Grid>
+            <ModelButton 
+                selectedId={selectedId} 
+                setSelectedId={setSelectedId}
+                checkedList={checkedList}
+                selectedIndex={selectedIndex}
+                updateObject={updateObject}
+            />
         </>
     );
 }
