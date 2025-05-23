@@ -12,13 +12,17 @@ type MainButtonProps = {
     selectedId: string | null
     setSelectedId: Dispatch<SetStateAction<string | null>>;
     checkedList: string[];
+    selectedIndex: number | null;
+    updateObject: (index: number, checkedId: string) => void;
 };
 
-export const ModelButton = (props: MainButtonProps ) => {
+export const ModelButton = (props: MainButtonProps) => {
     const {
         selectedId,
         setSelectedId,
-        checkedList
+        checkedList,
+        selectedIndex,
+        updateObject
     } = props;
     return(
         <>
@@ -39,16 +43,16 @@ export const ModelButton = (props: MainButtonProps ) => {
                     }}
                 >
                     <Box
-                            style={{
-                                background: 'white',
-                                padding: 27,
-                                width: "85vw",
-                                margin: '10% auto',
-                                borderRadius: 6,
-                            }}
-                        >
-                            <Box>{questions[selectedId].question}</Box>
-                        </Box>
+                        style={{
+                            background: 'white',
+                            padding: 27,
+                            width: "85vw",
+                            margin: '10% auto',
+                            borderRadius: 6,
+                        }}
+                    >
+                        <Box>{questions[selectedId].question}</Box>
+                    </Box>
 
                     {Object.entries(questions[selectedId].answers).map(([answerKey,value]) => (
                         <Box 
@@ -60,6 +64,9 @@ export const ModelButton = (props: MainButtonProps ) => {
                                     setSelectedId(null);
                                     //cookieに値を挿入(一週間後に消えるようになってます。)
                                     document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
+                                    console.log(document.cookie);
+                                    console.log(selectedIndex!, selectedId!);
+                                    updateObject(selectedIndex!, selectedId!)
                                 }}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
