@@ -29,12 +29,16 @@ export default function QuestionObjects(props: Props) {
         checkedList,
         setCheckedList
     } = props;
-    const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]);
-    const [ selectedId, setSelectedId ] = useState<string | null>(null);
-    const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null);
-    const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null);
-    const [ isReady, setIsReady ] = useState<true | false>(false);
-    const [ cookieValueBox, setCookieValueBox ] = useState<string | undefined>(undefined);
+
+    const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]); // 画面に表示可能なオブジェクトの一覧
+    const [ isTapped, setIsTapped ] = useState<string | null>(null); // 押した感のアニメーションを再生するためのフラグ
+    const [ selectedId, setSelectedId ] = useState<string | null>(null); // 質問回答中のオブジェクトID
+    const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null); // 質問回答中のオブジェクトのインデックス
+
+    // cookie関係のstate
+    const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null); // cookieから取得した回答済みのオブジェクトID一覧
+    const [ isReady, setIsReady ] = useState<true | false>(false); // オブジェクトの表示準備ができたかどうか
+    const [ cookieValueBox, setCookieValueBox ] = useState<string | undefined>(undefined); // cookieの値
 
     // cookieの取得
     useEffect(() => {
@@ -46,6 +50,7 @@ export default function QuestionObjects(props: Props) {
         setCookieValueBox(cookieValue)
     },[])
 
+    // cookieの値をデコードして、JSON.parseする
     useEffect(() => {
         if (cookieValueBox) {
             try {
@@ -57,6 +62,7 @@ export default function QuestionObjects(props: Props) {
         }
     }, [cookieValueBox]);
 
+    // cookieから取得した回答済みのオブジェクトID一覧をcheckedListにセット
     useEffect(() => {
         if (cookieCheckedList) {
             setCheckedList([...cookieCheckedList]);
@@ -105,6 +111,17 @@ export default function QuestionObjects(props: Props) {
         setSelectedIndex(null);
     }
 
+    // クリックしたときの処理
+    // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
+    function handleTap(index: number, checkedId: string){
+        setIsTapped(checkedId);
+        setTimeout(() => {
+            setIsTapped(null);
+            setSelectedId(checkedId);
+            setSelectedIndex(index);
+        }, 250);
+    };
+
     return (
         <>
             <Grid container spacing={0} style={{flexGrow: 1}}>
@@ -123,15 +140,14 @@ export default function QuestionObjects(props: Props) {
                                         marginTop: `${object.y}px`
                                     }}
                                     onClick={() => {
-                                        setSelectedId(object.id);
-                                        setSelectedIndex(index);
+                                        handleTap(index, object.id)
                                     }}
                                 >
                                     <Image
                                         src={`/objects/${object.id}.png`}
                                         alt={object.id}
                                         fill
-                                        className="animate-breathe"
+                                        className={`animate-breathe ${isTapped === object.id ? "scale-90" : "scale-100"}`}
                                         style={{
                                             objectFit: "contain",
                                             filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
