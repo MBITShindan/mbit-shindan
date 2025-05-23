@@ -44,21 +44,18 @@ export const ModelButton = (props: MainButtonProps) => {
         <>
             {selectedId && (
                 <Box
+                    className="fixed flex flex-col items-center justify-center"
                     sx={{
-                    position: 'fixed',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    itemAlign: "center",
-                    justifyContent: "center",
-                    top: "0",
-                    left: "0",
-                    width: '100vw',
-                    height: '100vh',
-                    background: 'rgba(0,0,0,0.5)',
-                    zIndex: 10,
+                        top: "0",
+                        left: "0",
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(0,0,0,0.5)',
+                        zIndex: 10,
                     }}
                 >
                     <Box
+                        className="text-lg text-left"
                         style={{
                             background: 'white',
                             padding: 27,
@@ -73,6 +70,7 @@ export const ModelButton = (props: MainButtonProps) => {
                     {questions[selectedId].answers.map((value, index) => (
                         <Box 
                             className="flex col items-center justify-center"
+                            sx={{ width: "85vw" }}
                             key={index}
                         >
                             <Button
@@ -80,14 +78,15 @@ export const ModelButton = (props: MainButtonProps) => {
                                 onClick={() => handleTap(index)}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
-                                    height: "5rem",
-                                    width: "18.75rem",
+                                    // height: "5rem",
+                                    // width: "18.75rem",
                                     borderRadius: 2,
                                     color: "black",
+                                    padding: "1rem",
                                     mt: "2rem"
                                 }}
                             >
-                                {value.answer}
+                                <span className="text-lg text-left">{value.answer}</span>
                             </Button>
                         </Box>
                     ))}
