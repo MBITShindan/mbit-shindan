@@ -6,6 +6,7 @@ import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
 import { ModelButton } from "./ModalButton";
 import Sparkles from "./Sparkles";
+import personalResult from "../personalResultResponse";
 
 type Position = {
     id: string;
