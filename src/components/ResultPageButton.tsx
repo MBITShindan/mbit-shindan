@@ -8,7 +8,7 @@ type Props = {
   userId: string;
 };
 
-export const MuiRankingButton = ({ userId }: Props) => {
+export const ResultPageButton = ({ userId }: Props) => {
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 

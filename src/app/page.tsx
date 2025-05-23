@@ -1,5 +1,5 @@
 import { MuiButton } from "../components/MuiButton";
-import {MuiRankingButton} from "../components/MuiRankingButton";
+import { ResultPageButton } from "../components/ResultPageButton";
 import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
@@ -238,18 +238,20 @@ export default async function TitlePage() {
                             性格診断
                         </MuiButton>
                     </Link>
-                    {userId && <MuiRankingButton userId={userId} />}
-                    <MuiButton
-                        name={"ranking"}
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
-                        診断ランキング
-                    </MuiButton>
+                    {userId && <ResultPageButton userId={userId} />}
+                    <Link href="ranking">
+                        <MuiButton
+                            name="ranking"
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
+                            診断ランキング
+                        </MuiButton>
+                    </Link>
                 </Box>
             </Box>
         </AppRouterCacheProvider>
