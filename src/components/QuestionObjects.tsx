@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
 import { ModelButton } from "./ModalButton";
+import personalResult from "../personalResultResponse";
 
 type Position = {
     id: string;
@@ -41,14 +42,15 @@ export default function QuestionObjects(props: Props) {
         .split('; ')
         .find(row => row.startsWith('currentProgress='))
         ?.split('=')[1];
-        setCookieValueBox(cookieValue)
+        setCookieValueBox(cookieValue);
+        personalResult({totalPoint:{E:0,S:0,T:0,J:0}})
     },[])
 
     useEffect(() => {
         if (cookieValueBox) {
             try {
                 setCookieCheckedList(JSON.parse(decodeURIComponent(cookieValueBox)));
-                console.log("cookieが取得できています"+ checkedList)
+                console.log("cookieが取得できています")
             } catch (e) {
                 console.error("クッキーのデコードに失敗:", e);
             }
