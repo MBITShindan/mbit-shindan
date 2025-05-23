@@ -70,7 +70,7 @@ export const ModelButton = (props: MainButtonProps) => {
                     {questions[selectedId].answers.map((value, index) => (
                         <Box 
                             className="flex col items-center justify-center"
-                            sx={{ width: "80vw" }}
+                            sx={{ maxWidth: "80vw" }}
                             key={index}
                         >
                             <Button
@@ -78,8 +78,8 @@ export const ModelButton = (props: MainButtonProps) => {
                                 onClick={() => handleTap(index)}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
-                                    // height: "5rem",
-                                    // width: "18.75rem",
+                                    height: "5rem",
+                                    width: "18.75rem",
                                     borderRadius: 2,
                                     color: "black",
                                     padding: "1rem",
