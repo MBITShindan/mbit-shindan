@@ -70,7 +70,7 @@ export const ModelButton = (props: MainButtonProps) => {
                     {questions[selectedId].answers.map((value, index) => (
                         <Box 
                             className="flex col items-center justify-center"
-                            sx={{ width: "85vw" }}
+                            sx={{ width: "80vw" }}
                             key={index}
                         >
                             <Button
