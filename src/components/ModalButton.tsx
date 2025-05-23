@@ -1,6 +1,6 @@
 `use client`
 
-import React from "react";
+import React, { useState } from "react";
 import { 
     Button, 
     Box,
@@ -24,6 +24,23 @@ export const ModelButton = (props: MainButtonProps) => {
         selectedIndex,
         updateObject
     } = props;
+
+    const [isTapped, setIsTapped] = useState<number | null>(null); // 押した感のアニメーションを再生するためのフラグ
+
+    // クリックしたときの処理
+    // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
+    function handleTap(answerIndex: number){
+        setIsTapped(answerIndex);
+        setTimeout(() => {
+            //cookieに値を挿入(一週間後に消える)
+            document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
+            console.log(document.cookie);
+            setIsTapped(null);
+            setSelectedId(null), 
+            updateObject(selectedIndex!, selectedId!)
+        }, 250);
+    };
+
     return(
         <>
             {selectedId && (
@@ -54,20 +71,14 @@ export const ModelButton = (props: MainButtonProps) => {
                         <Box>{questions[selectedId].question}</Box>
                     </Box>
 
-                    {Object.entries(questions[selectedId].answers).map(([answerKey,value]) => (
+                    {questions[selectedId].answers.map((value, index) => (
                         <Box 
                             className="flex col items-center justify-center"
-                            key={answerKey}
+                            key={index}
                         >
                             <Button
-                                onClick={() => {
-                                    setSelectedId(null), 
-                                    //cookieに値を挿入(一週間後に消えるようになってます。)
-                                    document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
-                                    console.log(document.cookie);
-                                    console.log(selectedIndex!, selectedId!);
-                                    updateObject(selectedIndex!, selectedId!)
-                                }}
+                                className={isTapped === index ? "scale-90 shadow-inner" : "scale-100"}
+                                onClick={() => handleTap(index)}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
                                     height: "5rem",
