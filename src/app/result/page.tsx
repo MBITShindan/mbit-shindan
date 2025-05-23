@@ -9,12 +9,7 @@ import { notFound } from 'next/navigation';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export default function Page({ params }: { params: { personality: string } }) {
-      console.log("クエリパラメータ type: <strong>"+params.personality+"</strong>")
-//   return (
-//     <div>
-//       性格タイプ: {params.personality}
-//     </div>
-//   );
+      console.log("クエリパラメータ type: <strong>"+'params.personality'+"</strong>")
   return (
         <AppRouterCacheProvider>
             <Box
