@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
 import { ModelButton } from "./ModalButton";
+import Sparkles from "./Sparkles";
 
 type Position = {
     id: string;
@@ -31,9 +32,11 @@ export default function QuestionObjects(props: Props) {
     } = props;
 
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]); // 画面に表示可能なオブジェクトの一覧
-    const [ isTapped, setIsTapped ] = useState<string | null>(null); // 押した感のアニメーションを再生するためのフラグ
     const [ selectedId, setSelectedId ] = useState<string | null>(null); // 質問回答中のオブジェクトID
     const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null); // 質問回答中のオブジェクトのインデックス
+
+    // 押した感のアニメーションを再生するためのstate
+    const [ isTapped, setIsTapped ] = useState<string | null>(null); // 押した感のアニメーションを再生するためのフラグ
 
     // cookie関係のstate
     const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null); // cookieから取得した回答済みのオブジェクトID一覧
@@ -152,7 +155,8 @@ export default function QuestionObjects(props: Props) {
                                             filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))" // 影を画像に直接付ける
                                         }}
                                         priority={true}
-                                />
+                                    />
+                                    {(isTapped === object.id) && (<Sparkles/>)}
                                 </button>
                             )}
                         </div>
