@@ -1,4 +1,4 @@
-`use client`
+'use client';
 
 import React from "react";
 import { 
@@ -57,7 +57,7 @@ export const ModelButton = (props: MainButtonProps ) => {
                         >
                             <Button
                                 onClick={() => {
-                                    setSelectedId(null), 
+                                    setSelectedId(null);
                                     //cookieに値を挿入(一週間後に消えるようになってます。)
                                     document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
                                     console.log(document.cookie);

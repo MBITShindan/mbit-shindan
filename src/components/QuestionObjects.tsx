@@ -37,7 +37,6 @@ export default function QuestionObjects(props: Props) {
 
     // cookieの取得
     useEffect(() => {
-    document.cookie;
     const cookieValue = document.cookie
         .split('; ')
         .find(row => row.startsWith('currentProgress='))
