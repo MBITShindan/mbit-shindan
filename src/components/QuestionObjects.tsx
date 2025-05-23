@@ -42,7 +42,6 @@ export default function QuestionObjects(props: Props) {
 
     // cookieの取得
     useEffect(() => {
-    document.cookie;
     const cookieValue = document.cookie
         .split('; ')
         .find(row => row.startsWith('currentProgress='))
@@ -60,13 +59,12 @@ export default function QuestionObjects(props: Props) {
                 console.error("クッキーのデコードに失敗:", e);
             }
         }
-    }, [cookieValueBox]);
+    },[cookieValueBox]);
 
     // cookieから取得した回答済みのオブジェクトID一覧をcheckedListにセット
     useEffect(() => {
         if (cookieCheckedList) {
             setCheckedList([...cookieCheckedList]);
-            console.log(cookieCheckedList);
             setIsReady(true);
         }
     }, [cookieCheckedList]);
