@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import React, { useState } from "react";
 import { 
     Button, 
@@ -36,7 +35,7 @@ export const ModelButton = (props: MainButtonProps) => {
             document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
             console.log(document.cookie);
             setIsTapped(null);
-            setSelectedId(null), 
+            setSelectedId(null);
             updateObject(selectedIndex!, selectedId!)
         }, 250);
     };
