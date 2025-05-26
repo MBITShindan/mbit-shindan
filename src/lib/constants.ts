@@ -1,7 +1,9 @@
+const BASE_URL = "https://odp5clhhn2.execute-api.ap-northeast-1.amazonaws.com/";
+
 export const ENDPOINTS = {
-    results: "https://btxzrvour5uubzpdyfs7nonphm0labwz.lambda-url.ap-northeast-1.on.aws",
-    rankings: "https://ona2pb64g2djmzh44bnhxu5wpm0abvuc.lambda-url.ap-northeast-1.on.aws",
+    results: `${BASE_URL}/results`,
+    rankings: `${BASE_URL}/rankings`,
     user: {
-        creation: "https://pslak2jsxzxclxuou7sk37s7ia0jnegm.lambda-url.ap-northeast-1.on.aws"
+        creation: `${BASE_URL}/user/creation`,
     }
 };
