@@ -9,6 +9,7 @@ export default async function RankingBox(props: {
 }) {
     const { rank, type, ratio } = props;
 
+    // TODO: グリッドボックス
     return (
         <Box className="flex items-center justify-center text-3xl font-bold gap-4">
             <Box>{rank}位</Box>
