@@ -239,7 +239,7 @@ export default async function TitlePage() {
                         </MuiButton>
                     </Link>
                     {userId && <ResultPageButton userId={userId} />}
-                    <Link href="ranking">
+                    <Link href="rankings">
                         <MuiButton
                             name="ranking"
                             sx={{
