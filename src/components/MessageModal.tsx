@@ -12,7 +12,7 @@ export function MessageModal({ message, onClose }: MessageModalProps) {
             message.split("\n").map((line, idx) => (
                 <Fragment key={idx}>
                     {line}
-                    <br />
+                    <br/>
                 </Fragment>
             ))
     ) : (
@@ -21,7 +21,7 @@ export function MessageModal({ message, onClose }: MessageModalProps) {
 
     const [isTapped, setIsTapped] = useState(false);
 
-    const handleTap = () => {
+    function handleTap(){
         setIsTapped(true);
         setTimeout(() => {
             setIsTapped(false);
