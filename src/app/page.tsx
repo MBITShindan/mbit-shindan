@@ -4,15 +4,60 @@ import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import Link from 'next/link';
 import { cookies } from "next/headers";
 import { MBTIType } from "../diagnosisResults";
+import { ENDPOINTS } from "../lib/constants";
 
 export default async function TitlePage() {
     const cookieStore = await cookies();
-    const userId = cookieStore.get("userId")?.value;
-    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined;
+    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined; // Cookieから診断結果を取得
+
+    const userId = cookieStore.get("userId")?.value; // CookieからユーザーIDを取得
+
+    // 診断結果のステータスを確認
+    async function checkStatus(id: string): Promise<boolean> {
+        try {
+            const res = await fetch(`${ENDPOINTS.results}?userId=${id}`, { cache: "no-store" });
+            if (!res.ok) return false;
+            const data = await res.json();
+            return typeof data.resultJudge !== "undefined";
+        } catch (error) {
+            console.error("診断結果確認エラー:", error);
+        return false;
+        }
+    }
+
+    // ユーザーIDを登録
+    async function registerUserId(id: string) {
+        try {
+            const response = await fetch(ENDPOINTS.user.creation, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: id }),
+                cache: "no-store"
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                console.error("登録失敗:", result.message || result);
+            } else {
+                console.log("登録成功:", result.message);
+            }
+        } catch (error) {
+            console.error("ユーザーID登録エラー:", error);
+        }
+    }
+
+    // ユーザーIDが存在する場合、診断結果のステータスを確認し、登録されていなければ登録
+    if (userId) {
+        const hasResult = await checkStatus(userId);
+        if (!hasResult) {
+            await registerUserId(userId);
+        }
+    }
 
     return (
         <AppRouterCacheProvider>
@@ -243,7 +288,21 @@ export default async function TitlePage() {
                             性格診断
                         </MuiButton>
                     </Link>
-                    {userId && <ResultPageButton userId={userId} />}
+                    {/* {userId && <ResultPageButton userId={userId} />} */}
+                    <Link href={`result/${personalityResult || ""}`}>
+                        <MuiButton
+                            disabled={!personalityResult}
+                            name="result"
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <HistoryIcon sx={{ fontSize: "3.1rem" }} />
+                            前回の診断結果
+                        </MuiButton>
+                    </Link>
                     <Link href="rankings">
                         <MuiButton
                             name="ranking"
