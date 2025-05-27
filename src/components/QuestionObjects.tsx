@@ -6,7 +6,8 @@ import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
 import { ModelButton } from "./ModalButton";
 import Sparkles from "./Sparkles";
-import personalResult from "../personalResultResponse";
+import personalResultResponse from "../personalResultResponse";
+import { useRouter } from 'next/navigation';
 
 type Position = {
     id: string;
@@ -32,6 +33,8 @@ export default function QuestionObjects(props: Props) {
         setCheckedList
     } = props;
 
+    const router = useRouter();
+
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]); // 画面に表示可能なオブジェクトの一覧
     const [ selectedId, setSelectedId ] = useState<string | null>(null); // 質問回答中のオブジェクトID
     const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null); // 質問回答中のオブジェクトのインデックス
@@ -43,15 +46,15 @@ export default function QuestionObjects(props: Props) {
     const [ cookieCheckedList, setCookieCheckedList] = useState<string | null>(null); // cookieから取得した回答済みのオブジェクトID一覧
     const [ isReady, setIsReady ] = useState<true | false>(false); // オブジェクトの表示準備ができたかどうか
     const [ cookieValueBox, setCookieValueBox ] = useState<string | undefined>(undefined); // cookieの値
+    const [ endDiagnosisProgress, setEndDiagnosisProgress ] = useState<boolean>(true);
 
     // cookieの取得
     useEffect(() => {
-    const cookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('currentProgress='))
-        ?.split('=')[1];
-        setCookieValueBox(cookieValue);
-        personalResult({totalPoint:{E:0,S:0,T:0,J:0}})
+        const cookieCurrentProgress = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('currentProgress='))
+            ?.split('=')[1];
+            setCookieValueBox(cookieCurrentProgress);
     },[])
 
     // cookieの値をデコードして、JSON.parseする
@@ -87,6 +90,43 @@ export default function QuestionObjects(props: Props) {
         setLeftObjects(positions);
     }, [isReady]);
 
+    useEffect(() => {
+    const cookieProgress = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('progress='))
+        ?.split('=')[1];
+
+    const progressObject = cookieProgress ? JSON.parse(decodeURIComponent(cookieProgress)) : null;
+
+    if (progressObject) {
+        console.log(progressObject);
+        const res: string = personalResultResponse(progressObject);
+        setTimeout(() => {
+            router.replace("/result/" + res);
+        }, 2000);
+    }
+}, []);
+
+    useEffect(() => {
+        if(checkedList.length == 10){
+            setEndDiagnosisProgress(false);
+            const cookieProgress = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('progress='))
+                ?.split('=')[1];
+
+            const progressObject = cookieProgress ? JSON.parse(decodeURIComponent(cookieProgress)) : null;
+
+            console.log(progressObject);
+
+            const res:string = personalResultResponse(progressObject);
+            setTimeout(()=>{
+                            router.replace("/result/"+res);
+            },2000)
+
+        }
+    }, [checkedList])
+
     // index番目のオブジェクトを変更する関数
     // ここでは、checkedListに含まれないオブジェクトをランダムに1個選択して追加する
     function updateObject(index: number, checkedId: string) {
@@ -112,6 +152,8 @@ export default function QuestionObjects(props: Props) {
         setLeftObjects(newObjects);
         setCheckedList((prev) => [...prev, checkedId]);
         setSelectedIndex(null);
+        // cookieに値を挿入(一週間後に消える)
+        document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify([...checkedList, checkedId]))}; path=/; max-age=604800`;
     }
 
     // クリックしたときの処理
@@ -142,9 +184,11 @@ export default function QuestionObjects(props: Props) {
                                         marginLeft: `${object.x}px`,
                                         marginTop: `${object.y}px`
                                     }}
-                                    onClick={() => {
-                                        handleTap(index, object.id)
+                                    onClick={()=>{
+                                        handleTap(index, object.id),
+                                        endDiagnosisProgress ? handleTap : undefined
                                     }}
+                                    disabled={!endDiagnosisProgress}
                                 >
                                     <Image
                                         src={`/objects/${object.id}.png`}
