@@ -8,12 +8,8 @@ import ModelButton from "./ModalButton";
 import Sparkles from "./Sparkles";
 import personalResultResponse from "../personalResultResponse";
 import { useRouter } from 'next/navigation';
-<<<<<<< HEAD
 import { MessageModal } from "./MessageModal";
 import { ENDPOINTS } from "../lib/constants";
-=======
-import { ENDPOINTS } from "../lib/constants";
->>>>>>> 08ed912200e45b66757753492949cb572c09423d
 
 type Position = {
     id: string;
