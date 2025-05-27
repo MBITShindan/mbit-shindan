@@ -4,7 +4,7 @@ import { ENDPOINTS } from "../../lib/constants";
 import { cookies } from "next/headers";
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import RankingBox from "../../components/RankingBox";
-import { MBTIType } from "../../diagnosisResults";
+import { diagnosisResults, MBTIType } from "../../diagnosisResults";
 
 type RankingData = {
     type: string;
@@ -21,7 +21,13 @@ export default async function RankingPage() {
 
     // 性格診断結果を取得
     const cookieStore = await cookies();
-    const personalityResult: string | undefined = cookieStore.get("personalityResult")?.value;
+    // const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined;
+    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined || "ENFP";
+
+    // 順位を取得する関数
+    function getRankingPosition(type: MBTIType): number {
+        return rankings.findIndex(ranking => ranking.type === type) + 1;
+    }
 
     return (
         <AppRouterCacheProvider>
@@ -42,17 +48,24 @@ export default async function RankingPage() {
                         診断ランキング
                     </span>
                 </Box>
-                <Box className="flex flex-col gap-2 w-full flex-grow overflow-y-auto">
+                <Box className="flex flex-col gap-2 w-full flex-grow overflow-y-auto pr-2">
                     {rankings.map((rankingData, index) => (
                         <RankingBox
                             key={rankingData.type}
                             rank={index + 1}
                             type={rankingData.type as MBTIType}
                             ratio={rankingData.ratio}
+                            isMyType={personalityResult === rankingData.type}
                         />
                     ))}
                 </Box>
-                {JSON.stringify(data, null, 2)}
+                {personalityResult && (
+                    <Box className="text-3xl font-bold">
+                        あなたのタイプ「{diagnosisResults[personalityResult].name}」は現在
+                        <span className="text-4xl animate-breathe inline-block">{getRankingPosition(personalityResult)}位</span>
+                        にランクイン中！
+                    </Box>
+                )}
             </Box>
         </AppRouterCacheProvider>
     );
