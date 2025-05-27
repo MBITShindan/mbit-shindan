@@ -19,24 +19,21 @@ export const ModelButton = (props: MainButtonProps) => {
     const {
         selectedId,
         setSelectedId,
-        checkedList,
         selectedIndex,
         updateObject
     } = props;
 
     const [isTapped, setIsTapped] = useState<number | null>(null); // 押した感のアニメーションを再生するためのフラグ
+    const [_resultObject, setResultObject] = useState<Record<string, number>>({"E": 0, "S": 0, "T": 0, "J": 0}); // MBITのポイントを管理するステート
 
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
     function handleTap(answerIndex: number){
         setIsTapped(answerIndex);
         setTimeout(() => {
-            //cookieに値を挿入(一週間後に消える)
-            document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify(checkedList))}; path=/diagnosis; max-age=604800`;
-            console.log(document.cookie);
             setIsTapped(null);
             setSelectedId(null);
-            updateObject(selectedIndex!, selectedId!)
+            updateObject(selectedIndex!, selectedId!);
         }, 250);
     };
 
@@ -75,7 +72,20 @@ export const ModelButton = (props: MainButtonProps) => {
                         >
                             <Button
                                 className={isTapped === index ? "scale-90 shadow-inner" : "scale-100"}
-                                onClick={() => handleTap(index)}
+                                onClick={() => {
+                                    setResultObject(prev => {
+                                        // newResultObjectを作成
+                                        const newResultObject = {...prev};
+                                        Object.entries(value.point).map(([_ ,value]) => {
+                                            newResultObject[value.type] = newResultObject[value.type] + value.point;
+                                        });
+                                        // データを保存
+                                        console.log(newResultObject);
+                                        document.cookie = `progress=${encodeURIComponent(JSON.stringify( newResultObject ))}; path=/; max-age=604800`;
+                                        return newResultObject;
+                                    });
+                                    handleTap(index); 
+                                }}
                                 sx={{
                                     background: 'rgba(206, 235, 255, 1)',
                                     height: "5rem",

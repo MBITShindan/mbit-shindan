@@ -215,16 +215,18 @@ export default async function TitlePage() {
                         gap: "1rem"
                     }}
                 >
-                    <MuiButton
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <PlayCircleOutlineIcon sx={{ fontSize: "3.1rem" }} />
-                        チュートリアル
-                    </MuiButton>
+                    <Link href="tutorial">
+                        <MuiButton
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <PlayCircleOutlineIcon sx={{ fontSize: "3.1rem" }} />
+                            チュートリアル
+                        </MuiButton>
+                    </Link>
                     <Link href="diagnosis">
                         <MuiButton
                             sx={{
