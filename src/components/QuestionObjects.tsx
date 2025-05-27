@@ -8,8 +8,12 @@ import ModelButton from "./ModalButton";
 import Sparkles from "./Sparkles";
 import personalResultResponse from "../personalResultResponse";
 import { useRouter } from 'next/navigation';
+<<<<<<< HEAD
 import { MessageModal } from "./MessageModal";
 import { ENDPOINTS } from "../lib/constants";
+=======
+import { ENDPOINTS } from "../lib/constants";
+>>>>>>> 08ed912200e45b66757753492949cb572c09423d
 
 type Position = {
     id: string;
@@ -120,13 +124,19 @@ export default function QuestionObjects(props: Props) {
 
             console.log(progressObject);
 
-            const res:string = personalResultResponse(progressObject);
-            setTimeout(()=>{
-                            router.replace("/result/"+res);
-            },2000)
-
+            const resultType: string = personalResultResponse(progressObject);
+            postResult(resultType); //診断結果をdbへ送信
+            handleEndDiagnosis(resultType);
         }
-    }, [checkedList])
+    }, [checkedList]);
+
+    // 診断が終了した際の処理
+    function handleEndDiagnosis(resultType: string) {
+        setTimeout(() => {
+            setDiagnosisResult(resultType);
+            document.cookie = `personalityResult=${resultType}; path=/; max-age=604800`;
+        }, 500);
+    }
 
     // index番目のオブジェクトを変更する関数
     // ここでは、checkedListに含まれないオブジェクトをランダムに1個選択して追加する
@@ -169,17 +179,17 @@ export default function QuestionObjects(props: Props) {
     async function postResult(res:string){
         //userIdを取得
         const userId = getCookie('userId');
-        const putResult = await fetch(ENDPOINTS.userresult,
-                {
-                    method:"POST",
-                    headers:{"Content-Type":"application/json"},
-                    body:JSON.stringify({
-                                            userId:userId,
-                                            resultType:res
-                                        })
-                }
-            );
-            console.log(putResult);
+        const putResult = await fetch(ENDPOINTS.results,
+            {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    userId:userId,
+                    resultType:res
+                })
+            }
+        );
+        console.log(putResult);
     }
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
