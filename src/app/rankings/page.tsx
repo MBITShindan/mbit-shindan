@@ -5,6 +5,9 @@ import { cookies } from "next/headers";
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import RankingBox from "../../components/RankingBox";
 import { diagnosisResults, MBTIType } from "../../diagnosisResults";
+import Link from "next/link";
+import { MuiButton } from "../../components/MuiButton";
+import { ReplayOutlined } from "@mui/icons-material";
 
 type RankingData = {
     type: string;
@@ -66,6 +69,15 @@ export default async function RankingPage() {
                         にランクイン中！
                     </Box>
                 )}
+                <Link href="/">
+                    <MuiButton
+                        name="home"
+                        sx={{ fontSize: "1.6rem" }}
+                    >
+                        <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
+                        タイトルに戻る
+                    </MuiButton>
+                </Link>
             </Box>
         </AppRouterCacheProvider>
     );
