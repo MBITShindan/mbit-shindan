@@ -15,7 +15,7 @@ type MainButtonProps = {
     updateObject: (index: number, checkedId: string) => void;
 };
 
-export const ModelButton = (props: MainButtonProps) => {
+export default function ModalButton(props: MainButtonProps) {
     const {
         selectedId,
         setSelectedId,
@@ -29,6 +29,7 @@ export const ModelButton = (props: MainButtonProps) => {
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
     function handleTap(answerIndex: number){
+        if(answerIndex === isTapped) return; // 既にタップされている場合は何もしない
         setIsTapped(answerIndex);
         setTimeout(() => {
             setIsTapped(null);

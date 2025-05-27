@@ -51,7 +51,7 @@ export default function TutorialPage() {
             setIsModalOpen(false);
             setTimeout(() => {
                 window.location.href = "/"; // タイトル画面へリダイレクト
-            }, 1000);
+            }, 500);
             return;
         }
 
@@ -85,7 +85,7 @@ export default function TutorialPage() {
         setTimeout(() => {
             setMessageIndex(6);
             setIsModalOpen(true);
-        }, 1000);
+        }, 500);
     }
 
     useEffect(() => {
@@ -124,8 +124,15 @@ export default function TutorialPage() {
             {isShowObject && (
                 <button
                     ref={objectRef}
-                    className="absolute bottom-[30vh] left-[50vw] translate-x-[-50%] translate-y-[50%]"
-                    onClick={() => {if(messageIndex === 4) handleQuestionOpen()}}
+                    className={"absolute bottom-[30vh] left-[50vw] translate-x-[-50%] translate-y-[50%]" + ((messageIndex === 4 && !isQuestionOpen) ? " z-30" : "")}
+                    onClick={() => {
+                        if(messageIndex !== 4) return;
+                        if(!isModalOpen){
+                            handleQuestionOpen();
+                        }else{
+                            handleMessageClose();
+                        }
+                    }}
                 >
                     <Image
                         src={`/objects/book.png`}

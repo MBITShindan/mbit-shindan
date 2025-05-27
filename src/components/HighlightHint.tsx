@@ -29,7 +29,7 @@ export const HighlightHint: React.FC<HighlightHintProps> = ({ targetRef, message
 
     return (
         <div
-            className="pointer-events-none absolute z-50"
+            className="pointer-events-none absolute z-40"
             style={{
                 top: position.top,
                 left: position.left,
