@@ -24,8 +24,7 @@ export default async function RankingPage() {
 
     // 性格診断結果を取得
     const cookieStore = await cookies();
-    // const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined;
-    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined || "ENFP";
+    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined;
 
     // 順位を取得する関数
     function getRankingPosition(type: MBTIType): number {
