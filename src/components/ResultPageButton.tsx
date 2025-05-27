@@ -16,7 +16,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   // 診断結果をチェック
   const checkStatus = async (id: string): Promise<boolean> => {
     try {
-      const res = await fetch(`${ENDPOINTS.results}/?userId=${id}`);
+      const res = await fetch(`${ENDPOINTS.results}?userId=${id}`);
       if (res.ok) {
         const data = await res.json();
         const resultFound = typeof data.resultJudge !== "undefined";
