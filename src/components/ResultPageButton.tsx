@@ -12,7 +12,7 @@ type Props = {
 export const ResultPageButton = ({ userId }: Props) => {
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
-
+  const [personality,setPasonality] = useState<string>("");
   // 診断結果をチェック
   const checkStatus = async (id: string): Promise<boolean> => {
     try {
@@ -21,6 +21,7 @@ export const ResultPageButton = ({ userId }: Props) => {
         const data = await res.json();
         const resultFound = typeof data.resultJudge !== "undefined";
         setCanSubmit(data.resultJudge === true);
+        setPasonality(data.result_type);
         return resultFound;
       } else {
         console.warn("診断チェック失敗（ステータスエラー）");
@@ -63,7 +64,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   }, [userId]);
 
   const handleClick = () => {
-    router.push("/result");
+    router.push("/result/"+personality);
   };
 
   return (

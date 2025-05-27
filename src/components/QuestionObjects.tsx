@@ -8,6 +8,7 @@ import { ModelButton } from "./ModalButton";
 import Sparkles from "./Sparkles";
 import personalResultResponse from "../personalResultResponse";
 import { useRouter } from 'next/navigation';
+import { ENDPOINTS } from "../lib/constants";
 
 type Position = {
     id: string;
@@ -120,6 +121,9 @@ export default function QuestionObjects(props: Props) {
             console.log(progressObject);
 
             const res:string = personalResultResponse(progressObject);
+            //診断結果をdbへ送信
+            postResult(res);
+
             setTimeout(()=>{
                             router.replace("/result/"+res);
             },2000)
@@ -156,6 +160,30 @@ export default function QuestionObjects(props: Props) {
         document.cookie = `currentProgress=${encodeURIComponent(JSON.stringify([...checkedList, checkedId]))}; path=/; max-age=604800`;
     }
 
+    const getCookie = (name: string): string | undefined => {
+        const value = document.cookie
+            .split('; ')
+            .find(row => row.startsWith(`${name}=`))
+            ?.split('=')[1];
+        return value;
+    };
+
+    //診断が10個終わったら既定のdbへデータを保存
+    async function postResult(res:string){
+        //userIdを取得
+        const userId = getCookie('userId');
+        const putResult = await fetch(ENDPOINTS.userresult,
+                {
+                    method:"POST",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({
+                                            userId:userId,
+                                            resultType:res
+                                        })
+                }
+            );
+            console.log(putResult);
+    }
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
     function handleTap(index: number, checkedId: string){

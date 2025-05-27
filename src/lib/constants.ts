@@ -5,5 +5,6 @@ export const ENDPOINTS = {
     rankings: `${BASE_URL}/rankings`,
     user: {
         creation: `${BASE_URL}/user/creation`,
-    }
+    },
+    userresult:`${BASE_URL}/userresult`
 };
