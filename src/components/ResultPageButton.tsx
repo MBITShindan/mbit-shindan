@@ -10,9 +10,11 @@ type Props = {
 };
 
 export const ResultPageButton = ({ userId }: Props) => {
+  // TODO ユーザー登録はpage.tsxで行うようにする
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [personality,setPasonality] = useState<string>("");
+  
   // 診断結果をチェック
   const checkStatus = async (id: string): Promise<boolean> => {
     try {

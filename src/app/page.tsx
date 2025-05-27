@@ -7,10 +7,13 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import Link from 'next/link';
 import { cookies } from "next/headers";
+import { MBTIType } from "../diagnosisResults";
 
 export default async function TitlePage() {
-  const cookieStore = await cookies();
-  const userId = cookieStore.get("userId")?.value;
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("userId")?.value;
+    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined;
+
     return (
         <AppRouterCacheProvider>
             <Box
