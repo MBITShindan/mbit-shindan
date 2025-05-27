@@ -1,7 +1,9 @@
 "use client";
-import { useState, useEffect, JSX } from "react";
+import { useState, useEffect, JSX, useRef } from "react";
 import { MessageModal } from "../../components/MessageModal";
 import Image from "next/image";
+import { HighlightHint } from "../../components/HighlightHint";
+import Sparkles from "../../components/Sparkles";
 
 export default function TutorialPage() {
     // 表示するメッセージ一覧
@@ -10,13 +12,15 @@ export default function TutorialPage() {
         "このアプリでは、あなたの性格を16のタイプに分類し、自己理解を深める手助けをします。",
         "診断を始める前に、いくつかの注意点があります。\n1. この診断はあくまで参考です。結果を鵜呑みにせず、自己理解の一助としてご利用ください。\n2. 診断結果は、あなたの性格を完全に表すものではありません。日々の経験や環境によって変化することもあります。\n3. 診断は約3分程度で完了します。リラックスして取り組んでください。",
         "それでは、診断を始めましょう！",
-        "おや、どうやら本が3冊ほど置いてあるようです。\nあなたの性格を診断するために、これらの本をタップして確認してみましょう。",
+        "おや、どうやら本が3冊ほど置いてあるようです。\nあなたの性格を診断するために、この本をタップして確認してみましょう。",
     ];
 
     // 現在のメッセージ番号
-    const [messageIndex, setMessageIndex] = useState<number>(0);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isShowObject, setIsShowObject] = useState<boolean>(false);
+    const [messageIndex, setMessageIndex] = useState<number>(0); // メッセージの表示進行度
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // モーダルの表示状態
+    const [isShowObject, setIsShowObject] = useState<boolean>(false); // 診断用オブジェクトの表示状態
+    const [isTapped, setIsTapped] = useState<boolean>(false); // 診断用オブジェクトをタップしたかどうか
+    const objectRef = useRef<HTMLButtonElement>(null); // 診断用オブジェクトの参照
 
     function handleMessageClose() {
         if(messageIndex === 3) {
@@ -39,6 +43,17 @@ export default function TutorialPage() {
             // すべてのメッセージが終わったら閉じる
             setIsModalOpen(false);
         }
+    }
+
+    function handleQuestionOpen() {
+        // 診断用オブジェクトをタップした後の処理
+        setIsTapped(true);
+        setTimeout(() => {
+            setIsTapped(false);
+        }, 250);
+        // setIsShowObject(false);
+        // setIsModalOpen(false);
+        // setMessageIndex(0); // メッセージをリセット
     }
 
     useEffect(() => {
@@ -69,28 +84,28 @@ export default function TutorialPage() {
             )}
             {isShowObject && (
                 <button
+                    ref={objectRef}
                     className="absolute bottom-[30vh] left-[50vw] translate-x-[-50%] translate-y-[50%]"
-                    onClick={() => {
-                        // handleTap(index, object.id)
-                    }}
+                    onClick={handleQuestionOpen}
                 >
                     <Image
                         src={`/objects/book.png`}
                         alt="book"
                         width={150}
                         height={150}
-                        // className={`animate-breathe ${isTapped === object.id ? "scale-90" : "scale-100"}`}
-                        className={`animate-breathe`}
+                        className={`animate-breathe ${isTapped ? "scale-90" : "scale-100"}`}
                         style={{
                             objectFit: "contain",
                             filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.3))"
                         }}
                         priority={true}
                     />
-                    {/* {(isTapped === object.id) && (<Sparkles/>)} */}
+                    {(isTapped) && (<Sparkles/>)}
                 </button>
             )}
-            {/* <span>{`isModalOpen: ${isModalOpen}, messageIndex: ${messageIndex}, isShowObject: ${isShowObject}`}</span> */}
+            {(!isModalOpen && isShowObject  && messageIndex >= 4 && objectRef.current) && (
+                <HighlightHint message="この本をタップ！" targetRef={objectRef}></HighlightHint>
+            )}
         </div>
     );
 }
