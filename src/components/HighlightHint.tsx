@@ -37,7 +37,15 @@ export const HighlightHint: React.FC<HighlightHintProps> = ({ targetRef, message
             }}
         >
             {/* 輪っかのスタイル例 */}
-            <div className="w-24 h-24 border-4 border-blue-500 rounded-full animate-ping mt-15 ml-3"/>
+            <div
+                className="w-24 h-24 border-4 border-blue-500 rounded-full animate-ping"
+                style={{
+                    marginTop: 50,
+                    marginLeft: 20
+                    // marginTop: (targetRef.current?.getBoundingClientRect().width || 0) * 0.3,
+                    // marginLeft: (targetRef.current?.getBoundingClientRect().height || 0) * 0.1
+                }}
+            />
             {/* メッセージも一緒に表示（オプション） */}
             {message && (
                 <div className="mt-5 text-white text-center bg-black/70 p-2 rounded-lg text-sm max-w-[200px]">
