@@ -135,7 +135,7 @@ export default function TutorialPage() {
                     }}
                 >
                     <Image
-                        src={`/objects/book.png`}
+                        src="/objects/book.png"
                         alt="book"
                         width={150}
                         height={150}
@@ -155,7 +155,6 @@ export default function TutorialPage() {
             {(isQuestionOpen && !isModalOpen && messageIndex === 5 && answerRef.current) && (
                 <HighlightHint message="この回答をタップ！" targetRef={answerRef}></HighlightHint>
             )}
-            {messageIndex}
         </div>
     );
 }
