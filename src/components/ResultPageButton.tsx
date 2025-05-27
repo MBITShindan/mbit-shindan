@@ -16,7 +16,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   // 診断結果をチェック
   const checkStatus = async (id: string): Promise<boolean> => {
     try {
-      const res = await fetch(`${ENDPOINTS.results}/?userId=${id}`);
+      const res = await fetch(`${ENDPOINTS.results}?userId=${id}`);
       if (res.ok) {
         const data = await res.json();
         const resultFound = typeof data.resultJudge !== "undefined";
@@ -30,8 +30,7 @@ export const ResultPageButton = ({ userId }: Props) => {
       console.error("診断結果確認エラー:", e);
       return false;
     }
-  };
-
+  }
   // ユーザーIDを登録
   const registerUserId = async (id: string) => {
     try {
