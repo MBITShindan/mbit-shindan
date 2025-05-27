@@ -9,9 +9,9 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const matchIcons = [
-  <EmojiEventsIcon fontSize="small" />,
-  <MilitaryTechIcon fontSize="small" />,
-  <WorkspacePremiumIcon fontSize="small" />
+  <EmojiEventsIcon/>,
+  <WorkspacePremiumIcon/>,
+  <MilitaryTechIcon/>
 ];
 const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7"];
 
@@ -27,27 +27,28 @@ export default function Diagnosis({ personality }: Props) {
   }
 
   return (
-    <div className="p-2 mx-auto max-w-sm text-center">
+    <div className="max-h-[90vh] overflow-y-auto">
+    <div className="p-2 mx-auto max-w-sm text-center text-[#3C4F69] font-semibold">
       {/* タイトル */}
-      <h1 className="text-xl font-bold -mt-8 mb-1">
-        あなたは <span className="text-green-700">{result.name}</span> タイプ！
+      <h1 className="text-2xl mb-1">
+        あなたは <span className="text-4xl">{result.name}</span> タイプ！
       </h1>
 
       {/* キャラクター画像 */}
-      <div className="flex items-start mt-4 ml-30 -gap-4">
+      <div className="flex items-start mt-4 ml-35 -gap-4">
       <Image
         src={result.image.replace("../public", "")}
         alt={`${result.name}の画像`}
         width={100}
         height={100}
-        className="mx-auto mb-2 -mt-3 w-[130] h-[170]"
+        className="mx-auto mb-2 -mt-3 w-[100] h-[140]"
       />
-      <p className="text-xl text-gray-600 mt-19 mr-20 mb-20 font-semibold">タイプ<br></br>【{result.type}】</p>
+      <p className="text-lg text-gray-600 mt-17 mr-20 mb-17">タイプ<br></br>【{result.type}】</p>
       </div>
 
       {/* 性格説明 */}
-      <div className="text-left -mt-17">
-        <div className="flex items-center mb-1 text-blue-800 font-semibold">
+      <div className="text-left -mt-17 -mb-1">
+        <div className="text-xl flex items-center mb-1">
           <PersonPinCircleIcon className="mr-1" />
           性格説明
         </div>
@@ -56,35 +57,35 @@ export default function Diagnosis({ personality }: Props) {
       </div>
 
       {/* 相性の良いタイプ */}
-      <div className="text-left mt-4">
-        <div className="flex items-center mb-2 text-pink-800 font-semibold text-base">
+      <div className="text-left mt-2 -mb-2">
+        <div className="text-xl flex items-center text-base">
           <Diversity1Icon className="mr-1" />
           相性のいいタイプは…
         </div>
         <div className="grid grid-cols-2 gap-2">
           {result.goodMatches.map((match, index) => (
             <div key={match}
-            className="flex items-center justify-between px-3 py-2 rounded-xl shadow text-sm bg-opacity-80"
+            className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
             style={{ backgroundColor: matchBgColors[index] || "#f0f0f0" }}
             >
-              <span className="flex items-center gap-1 font-semibold">
-                {matchIcons[index] ?? <EmojiEventsIcon fontSize="small" />}
+              <span className="flex items-center gap-2">
+                {matchIcons[index]}
                 {diagnosisResults[match as MBTIType]?.name ?? match}
               </span>
-              <span className="text-gray-700 font-bold">
+              <span className="text-gray-700">
                 {[13, 7, 20][index] || 10}%
               </span>
             </div>
           ))}
           {/* その他 */}
-          <div className="flex items-center justify-between px-3 py-2 rounded-xl shadow text-sm bg-gray-200 bg-opacity-80"
+          <div className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
           style={{ backgroundColor: "#DFE4EA" }}
           >
-            <span className="flex items-center gap-1 font-semibold">
-              <MoreHorizIcon fontSize="small" />
+            <span className="flex items-center gap-1">
+              <MoreHorizIcon/>
               その他
             </span>
-            <span className="text-gray-700 font-bold">
+            <span className="text-gray-700">
               {
                 100 -
                 ([13, 7, 20]
@@ -98,7 +99,7 @@ export default function Diagnosis({ personality }: Props) {
 
       {/* 食べ物のおすすめ */}
       <div className="text-left mt-4">
-        <div className="flex items-center mb-1 text-orange-800 font-semibold">
+        <div className="text-xl flex items-center mb-1">
           <FlatwareIcon className="mr-1" />
           おすすめ屋台グルメ！
         </div>
@@ -113,6 +114,7 @@ export default function Diagnosis({ personality }: Props) {
         />
         </div>
       </div>
+    </div>
     </div>
   );
 }

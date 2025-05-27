@@ -30,35 +30,25 @@ export default function Page({ params }: PageProps) {
           sx={{
             width: "100vw",
             height: "100dvh",
-            overflowY: "auto",
-            position: "relative",
+            display: "flex",
+            flexDirection: "column",
             backgroundImage: `url('${basePath}/resultBG.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            paddingBottom: "10rem",
           }}
         >
-          {/* 診断結果を中央に表示 */}
           <Box
             sx={{
-              mt: "2rem",
-              maxWidth: "1000vw",
-              width: "95%",
-              height:"50svh",
-              position: "fixed",
-              left: "50%",
-              transform: "translateX(-50%)",
+              flex: 1,
+              overflowY: "auto",
+              padding: "2rem 0 12rem", // 下部ボタンのために余白を追加
+              display: "flex",
               justifyContent: "center",
             }}
           >
             <Diagnosis personality={personality} />
           </Box>
-
-          {/* 固定フッターボタン */}
           <Box
             sx={{
               position: "fixed",
@@ -70,6 +60,7 @@ export default function Page({ params }: PageProps) {
               justifyContent: "center",
               alignItems: "center",
               gap: "1rem",
+              zIndex: 10,
             }}
           >
             <Box sx={{ display: "flex", gap: "1rem" }}>
