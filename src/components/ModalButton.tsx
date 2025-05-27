@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { 
     Button, 
     Box,
@@ -19,13 +19,12 @@ export const ModelButton = (props: MainButtonProps) => {
     const {
         selectedId,
         setSelectedId,
-        checkedList,
         selectedIndex,
         updateObject
     } = props;
 
     const [isTapped, setIsTapped] = useState<number | null>(null); // 押した感のアニメーションを再生するためのフラグ
-    const [resultObject, setResultObject] = useState<Record<string, number>>({"E": 0, "S": 0, "T": 0, "J": 0}); // MBITのポイントを管理するステート
+    const [_resultObject, setResultObject] = useState<Record<string, number>>({"E": 0, "S": 0, "T": 0, "J": 0}); // MBITのポイントを管理するステート
 
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する

@@ -185,8 +185,9 @@ export default function QuestionObjects(props: Props) {
                                         marginTop: `${object.y}px`
                                     }}
                                     onClick={()=>{
-                                        handleTap(index, object.id),
-                                        endDiagnosisProgress ? handleTap : undefined
+                                        if (endDiagnosisProgress) {
+                                            handleTap(index, object.id);
+                                        }
                                     }}
                                     disabled={!endDiagnosisProgress}
                                 >
