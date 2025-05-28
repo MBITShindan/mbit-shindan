@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { diagnosisResults, MBTIType } from "../diagnosisResults";
-import Diversity1Icon from '@mui/icons-material/Diversity1';
-import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
-import FlatwareIcon from '@mui/icons-material/Flatware';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import Diversity1Icon from '@mui/icons-material/Diversity1Outlined';
+import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircleOutlined';
+import FlatwareIcon from '@mui/icons-material/FlatwareOutlined';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEventsOutlined';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTechOutlined';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremiumOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const matchIcons = [
