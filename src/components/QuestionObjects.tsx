@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { Grid } from "@mui/material";
 import { questions } from "../mbtiQuestions";
-import { ModelButton } from "./ModalButton";
+import ModelButton from "./ModalButton";
 import Sparkles from "./Sparkles";
 import personalResultResponse from "../personalResultResponse";
 import { useRouter } from 'next/navigation';
+import { MessageModal } from "./MessageModal";
 import { ENDPOINTS } from "../lib/constants";
 
 type Position = {
@@ -39,6 +40,7 @@ export default function QuestionObjects(props: Props) {
     const [ leftObjects, setLeftObjects ] = useState<(Position | null)[]>([]); // 画面に表示可能なオブジェクトの一覧
     const [ selectedId, setSelectedId ] = useState<string | null>(null); // 質問回答中のオブジェクトID
     const [ selectedIndex, setSelectedIndex ] = useState<number | null>(null); // 質問回答中のオブジェクトのインデックス
+    const [ diagnosisResult, setDiagnosisResult ] = useState<string | null>(null); // 診断結果のタイプ
 
     // 押した感のアニメーションを再生するためのstate
     const [ isTapped, setIsTapped ] = useState<string | null>(null); // 押した感のアニメーションを再生するためのフラグ
@@ -92,24 +94,22 @@ export default function QuestionObjects(props: Props) {
     }, [isReady]);
 
     useEffect(() => {
-    const cookieProgress = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('progress='))
-        ?.split('=')[1];
+        const cookieProgress = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('progress='))
+            ?.split('=')[1];
 
-    const progressObject = cookieProgress ? JSON.parse(decodeURIComponent(cookieProgress)) : null;
+        const progressObject = cookieProgress ? JSON.parse(decodeURIComponent(cookieProgress)) : null;
 
-    if (progressObject) {
-        console.log(progressObject);
-        const res: string = personalResultResponse(progressObject);
-        setTimeout(() => {
-            router.replace("/result/" + res);
-        }, 2000);
-    }
-}, []);
+        if (progressObject) {
+            console.log(progressObject);
+            const resultType: string = personalResultResponse(progressObject);
+            handleEndDiagnosis(resultType);
+        }
+    }, []);
 
     useEffect(() => {
-        if(checkedList.length == 10){
+        if(checkedList.length >= 10){
             setEndDiagnosisProgress(false);
             const cookieProgress = document.cookie
                 .split('; ')
@@ -120,16 +120,19 @@ export default function QuestionObjects(props: Props) {
 
             console.log(progressObject);
 
-            const res:string = personalResultResponse(progressObject);
-            //診断結果をdbへ送信
-            postResult(res);
-
-            setTimeout(()=>{
-                            router.replace("/result/"+res);
-            },2000)
-
+            const resultType: string = personalResultResponse(progressObject);
+            postResult(resultType); //診断結果をdbへ送信
+            handleEndDiagnosis(resultType);
         }
-    }, [checkedList])
+    }, [checkedList]);
+
+    // 診断が終了した際の処理
+    function handleEndDiagnosis(resultType: string) {
+        setTimeout(() => {
+            setDiagnosisResult(resultType);
+            document.cookie = `personalityResult=${resultType}; path=/; max-age=604800`;
+        }, 500);
+    }
 
     // index番目のオブジェクトを変更する関数
     // ここでは、checkedListに含まれないオブジェクトをランダムに1個選択して追加する
@@ -172,21 +175,22 @@ export default function QuestionObjects(props: Props) {
     async function postResult(res:string){
         //userIdを取得
         const userId = getCookie('userId');
-        const putResult = await fetch(ENDPOINTS.userresult,
-                {
-                    method:"POST",
-                    headers:{"Content-Type":"application/json"},
-                    body:JSON.stringify({
-                                            userId:userId,
-                                            resultType:res
-                                        })
-                }
-            );
-            console.log(putResult);
+        const putResult = await fetch(ENDPOINTS.results,
+            {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    userId:userId,
+                    resultType:res
+                })
+            }
+        );
+        console.log(putResult);
     }
     // クリックしたときの処理
     // ここで、押した感を演出するアニメーションを再生してから、selectedIdとselectedIndexを更新する
     function handleTap(index: number, checkedId: string){
+        if(isTapped !== null) return; // 既にタップされている場合は何もしない
         setIsTapped(checkedId);
         setTimeout(() => {
             setIsTapped(null);
@@ -245,6 +249,14 @@ export default function QuestionObjects(props: Props) {
                 selectedIndex={selectedIndex}
                 updateObject={updateObject}
             />
+            {diagnosisResult && (
+                <MessageModal
+                    message={"おめでとうございます、診断が完了しました！\n画面をタップして、診断結果を確認しましょう！"}
+                    onClose={() => {
+                        router.push("/result/" + diagnosisResult);
+                    }}
+                />
+            )}
         </>
     );
 }

@@ -1,12 +1,12 @@
 type total = { 
-                E:number;
-                S:number;
-                T:number;
-                J:number;
-            }
+    E: number;
+    S: number;
+    T: number;
+    J: number;
+}
 
-export default function personalResultResponse (total:total | undefined){
-    let response:string = "";
+export default function personalResultResponse (total: total | undefined){
+    let response: string = "";
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     if(total != undefined){
         if(total.E == 0){

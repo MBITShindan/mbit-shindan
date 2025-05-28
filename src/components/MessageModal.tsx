@@ -22,6 +22,7 @@ export function MessageModal({ message, onClose }: MessageModalProps) {
     const [isTapped, setIsTapped] = useState(false);
 
     function handleTap(){
+        if(isTapped) return; // 既にタップされている場合は何もしない
         setIsTapped(true);
         setTimeout(() => {
             setIsTapped(false);
@@ -30,10 +31,10 @@ export function MessageModal({ message, onClose }: MessageModalProps) {
     };
 
     return (
-        <div className="relative w-full h-full">
+        <div className="fixed w-full h-full z-20">
             <button
                 onClick={handleTap}
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-black/50"
+                className="fixed inset-0 flex items-center justify-center bg-black bg-black/50"
             >
                 <div
                     className={`bg-white rounded-md p-6 w-[85vw] max-w-md text-left text-lg text-black transition-transform duration-200 ${
