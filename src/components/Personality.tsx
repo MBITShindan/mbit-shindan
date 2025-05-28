@@ -64,7 +64,7 @@ export default function Diagnosis({ personality }: Props) {
         </div>
         <div className="grid grid-cols-2 gap-2">
           {result.goodMatches.map((match, index) => (
-            <div key={match}
+            <div key={index}
             className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
             style={{ backgroundColor: matchBgColors[index] || "#f0f0f0" }}
             >

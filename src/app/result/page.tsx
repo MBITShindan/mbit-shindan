@@ -4,8 +4,6 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { diagnosisResults } from '../../diagnosisResults';
-import { notFound } from 'next/navigation';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export default function Page({ params }: { params: { personality: string } }) {

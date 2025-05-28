@@ -1,5 +1,4 @@
 import { MuiButton } from "../components/MuiButton";
-import { ResultPageButton } from "../components/ResultPageButton";
 import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
