@@ -9,10 +9,11 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const matchIcons = [
-  <EmojiEventsIcon/>,
-  <WorkspacePremiumIcon/>,
-  <MilitaryTechIcon/>
+  EmojiEventsIcon,
+  WorkspacePremiumIcon,
+  MilitaryTechIcon
 ];
+
 const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7"];
 
 type Props = {
@@ -63,20 +64,24 @@ export default function Diagnosis({ personality }: Props) {
           相性のいいタイプは…
         </div>
         <div className="grid grid-cols-2 gap-2">
-          {result.goodMatches.map((match, index) => (
-            <div key={index}
-            className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
-            style={{ backgroundColor: matchBgColors[index] || "#f0f0f0" }}
-            >
-              <span className="flex items-center gap-2">
-                {matchIcons[index]}
-                {diagnosisResults[match as MBTIType]?.name ?? match}
-              </span>
-              <span className="text-gray-700">
-                {[13, 7, 20][index] || 10}%
-              </span>
-            </div>
-          ))}
+          {result.goodMatches.map((match, index) => {
+            const IconComponent = matchIcons[index];
+            return (
+              <div
+                key={index}
+                className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
+                style={{ backgroundColor: matchBgColors[index] || "#f0f0f0" }}
+              >
+                <span className="flex items-center gap-2">
+                  <IconComponent key={`icon-${index}`} />
+                  {diagnosisResults[match as MBTIType]?.name ?? match}
+                </span>
+                <span className="text-gray-700">
+                  {[13, 7, 20][index] || 10}%
+                </span>
+              </div>
+            );
+          })}
           {/* その他 */}
           <div className="flex items-center justify-between px-5 py-2 rounded-xl shadow text-sm bg-opacity-80"
           style={{ backgroundColor: "#DFE4EA" }}
