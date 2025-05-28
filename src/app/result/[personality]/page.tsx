@@ -1,5 +1,5 @@
 import { MBTIType, diagnosisResults } from "../../../diagnosisResults";
-import Diagnosis from "../../../components/Personality";
+import Diagnosis from "../../../components/Diagnosis";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
