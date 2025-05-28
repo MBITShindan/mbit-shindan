@@ -6,5 +6,4 @@ export const ENDPOINTS = {
     user: {
         creation: `${BASE_URL}/user/creation`,
     },
-    userresult:`${BASE_URL}/userresult`
 };

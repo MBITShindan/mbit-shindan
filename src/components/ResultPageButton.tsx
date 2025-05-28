@@ -35,7 +35,7 @@ export const ResultPageButton = ({ userId }: Props) => {
   // ユーザーIDを登録
   const registerUserId = async (id: string) => {
     try {
-      const response = await fetch(ENDPOINTS.user.creation, {
+      const response = await fetch(ENDPOINTS.results, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: id }),
