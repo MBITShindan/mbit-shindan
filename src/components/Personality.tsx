@@ -27,12 +27,10 @@ export default function Diagnosis({ personality }: Props) {
   }
 
   return (
-    <div style={{ maxHeight: "90vh", overflowY: "auto" }}>
       <div
         style={{
           padding: "0.5rem",
           margin: "0 auto",
-          maxWidth: "350px",
           textAlign: "center",
           color: "#3C4F69",
           fontWeight: 600,
@@ -166,6 +164,5 @@ export default function Diagnosis({ personality }: Props) {
           </div>
         </div>
       </div>
-    </div>
   );
 }

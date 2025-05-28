@@ -40,27 +40,24 @@ export default function Page({ params }: PageProps) {
         >
           <Box
             sx={{
-              flex: 1,
+            //   flex: 1,
               overflowY: "auto",
-              padding: "2rem 0 12rem", // 下部ボタンのために余白を追加
               display: "flex",
               justifyContent: "center",
+              maxWidth: "25rem",
+              margin: "0 auto",
+              padding: "0 1rem"
             }}
           >
             <Diagnosis personality={personality} />
           </Box>
           <Box
             sx={{
-              position: "fixed",
-              bottom: "2rem",
-              left: "50%",
-              transform: "translateX(-50%)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
               gap: "1rem",
-              zIndex: 10,
             }}
           >
             <Box sx={{ display: "flex", gap: "1rem" }}>
