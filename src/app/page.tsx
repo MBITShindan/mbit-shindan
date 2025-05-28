@@ -289,7 +289,22 @@ export default async function TitlePage() {
                         </MuiButton>
                     </Link>
                     {/* {userId && <ResultPageButton userId={userId} />} */}
-                    <Link href={`result/${personalityResult || ""}`}>
+                    
+                    {personalityResult ?(
+                        <Link href={`result/${personalityResult || ""}`}>
+                            <MuiButton
+                                disabled={!personalityResult}
+                                name="result"
+                                sx={{
+                                    width: "17rem",
+                                    height: "4rem",
+                                    fontSize: "1.6rem"
+                                }}
+                            >
+                                <HistoryIcon sx={{ fontSize: "3.1rem" }} />
+                                前回の診断結果
+                            </MuiButton>
+                        </Link>):(
                         <MuiButton
                             disabled={!personalityResult}
                             name="result"
@@ -302,7 +317,7 @@ export default async function TitlePage() {
                             <HistoryIcon sx={{ fontSize: "3.1rem" }} />
                             前回の診断結果
                         </MuiButton>
-                    </Link>
+                    )}
                     <Link href="rankings">
                         <MuiButton
                             name="ranking"
