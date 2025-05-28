@@ -5,10 +5,59 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HistoryIcon from '@mui/icons-material/History';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
+import Link from 'next/link';
+import { cookies } from "next/headers";
+import { MBTIType } from "../diagnosisResults";
+import { ENDPOINTS } from "../lib/constants";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+export default async function TitlePage() {
+    const cookieStore = await cookies();
+    const personalityResult: MBTIType | undefined = cookieStore.get("personalityResult")?.value as MBTIType | undefined; // Cookieから診断結果を取得
 
-export default function TitlePage() {
+    const userId = cookieStore.get("userId")?.value; // CookieからユーザーIDを取得
+
+    // 診断結果のステータスを確認
+    async function checkStatus(id: string): Promise<boolean> {
+        try {
+            const res = await fetch(`${ENDPOINTS.results}?userId=${id}`, { cache: "no-store" });
+            if (!res.ok) return false;
+            const data = await res.json();
+            return typeof data.resultJudge !== "undefined";
+        } catch (error) {
+            console.error("診断結果確認エラー:", error);
+        return false;
+        }
+    }
+
+    // ユーザーIDを登録
+    async function registerUserId(id: string) {
+        try {
+            const response = await fetch(ENDPOINTS.user.creation, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: id }),
+                cache: "no-store"
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                console.error("登録失敗:", result.message || result);
+            } else {
+                console.log("登録成功:", result.message);
+            }
+        } catch (error) {
+            console.error("ユーザーID登録エラー:", error);
+        }
+    }
+
+    // ユーザーIDが存在する場合、診断結果のステータスを確認し、登録されていなければ登録
+    if (userId) {
+        const hasResult = await checkStatus(userId);
+        if (!hasResult) {
+            await registerUserId(userId);
+        }
+    }
+
     return (
         <AppRouterCacheProvider>
             <Box
@@ -17,7 +66,7 @@ export default function TitlePage() {
                     height: "100dvh",
                     overflow: "hidden",
                     position: "fixed",
-                    backgroundImage: `url('${basePath}/Pasuteru.png')`,
+                    backgroundImage: "url('pastel.png')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -51,7 +100,7 @@ export default function TitlePage() {
                                 fontFamily: "Roboto",
                                 fontStyle: "italic",
                                 color: "white",
-                                textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)",
+                                textShadow: "0 3px 10px rgba(0, 0, 0, 0.3)"
                             }}
                         >
                             M
@@ -213,47 +262,74 @@ export default function TitlePage() {
                         gap: "1rem"
                     }}
                 >
-                    <MuiButton
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <PlayCircleOutlineIcon sx={{ fontSize: "3.1rem" }} />
-                        チュートリアル
-                    </MuiButton>
-                    <MuiButton
-                        sx={{
-                            background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
-                            width: "12.5rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <PersonSearchIcon sx={{ fontSize: "3.1rem" }} />
-                        性格診断
-                    </MuiButton>
-                    <MuiButton
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <HistoryIcon sx={{ fontSize: "3.1rem" }} />
-                        前回の診断結果
-                    </MuiButton>
-                    <MuiButton
-                        sx={{
-                            width: "17rem",
-                            height: "4rem",
-                            fontSize: "1.6rem"
-                        }}
-                    >
-                        <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
-                        診断ランキング
-                    </MuiButton>
+                    <Link href="tutorial">
+                        <MuiButton
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <PlayCircleOutlineIcon sx={{ fontSize: "3.1rem" }} />
+                            チュートリアル
+                        </MuiButton>
+                    </Link>
+                    <Link href="diagnosis">
+                        <MuiButton
+                            sx={{
+                                background: "linear-gradient(to bottom, #0033FF, #71F6FF)",
+                                width: "12.5rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <PersonSearchIcon sx={{ fontSize: "3.1rem" }} />
+                            性格診断
+                        </MuiButton>
+                    </Link>
+                    {/* {userId && <ResultPageButton userId={userId} />} */}
+                    
+                    {personalityResult ?(
+                        <Link href={`result/${personalityResult || ""}`}>
+                            <MuiButton
+                                disabled={!personalityResult}
+                                name="result"
+                                sx={{
+                                    width: "17rem",
+                                    height: "4rem",
+                                    fontSize: "1.6rem"
+                                }}
+                            >
+                                <HistoryIcon sx={{ fontSize: "3.1rem" }} />
+                                前回の診断結果
+                            </MuiButton>
+                        </Link>):(
+                        <MuiButton
+                            disabled={!personalityResult}
+                            name="result"
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <HistoryIcon sx={{ fontSize: "3.1rem" }} />
+                            前回の診断結果
+                        </MuiButton>
+                    )}
+                    <Link href="rankings">
+                        <MuiButton
+                            name="ranking"
+                            sx={{
+                                width: "17rem",
+                                height: "4rem",
+                                fontSize: "1.6rem"
+                            }}
+                        >
+                            <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
+                            診断ランキング
+                        </MuiButton>
+                    </Link>
                 </Box>
             </Box>
         </AppRouterCacheProvider>
