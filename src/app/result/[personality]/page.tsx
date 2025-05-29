@@ -6,6 +6,7 @@ import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ReplayIcon from '@mui/icons-material/Replay';
+import { redirect } from "next/navigation"; 
 
 type PageProps = {
   params: {
@@ -23,6 +24,10 @@ export async function generateStaticParams() {
 
 export default function Page({ params }: PageProps) {
   const { personality } = params;
+  const result = diagnosisResults[personality];
+  if (!result) {
+    redirect("/");
+  }
   return (
     <div>
       <AppRouterCacheProvider>
@@ -40,7 +45,6 @@ export default function Page({ params }: PageProps) {
         >
           <Box
             sx={{
-            //   flex: 1,
               overflowY: "auto",
               display: "flex",
               justifyContent: "center",
