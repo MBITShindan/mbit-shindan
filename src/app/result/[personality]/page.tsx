@@ -1,20 +1,11 @@
 import { MBTIType, diagnosisResults } from "../../../diagnosisResults";
-import Diagnosis from "../../../components/Diagnosis";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { Box } from "@mui/material";
-import { MuiButton } from "@/components/MuiButton";
-import ShareIcon from '@mui/icons-material/Share';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import ReplayIcon from '@mui/icons-material/Replay';
-import { redirect } from "next/navigation"; 
+import DiagnosisClient from "./DiagnosisClient";
 
 type PageProps = {
   params: {
     personality: MBTIType;
   };
 };
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export async function generateStaticParams() {
   return Object.keys(diagnosisResults).map((type) => ({
@@ -25,94 +16,8 @@ export async function generateStaticParams() {
 export default function Page({ params }: PageProps) {
   const { personality } = params;
   const result = diagnosisResults[personality];
-  if (!result) {
-    redirect("/");
-  }
-  return (
-    <div>
-      <AppRouterCacheProvider>
-        <Box
-          sx={{
-            width: "100vw",
-            height: "100dvh",
-            display: "flex",
-            flexDirection: "column",
-            backgroundImage: `url('${basePath}/resultBG.png')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <Box
-            sx={{
-              overflowY: "auto",
-              display: "flex",
-              justifyContent: "center",
-              maxWidth: "25rem",
-              margin: "0 auto",
-              padding: "0 1rem"
-            }}
-          >
-            <Diagnosis personality={personality} />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            <Box sx={{ display: "flex", gap: "1rem" }}>
-              <MuiButton
-                sx={{
-                  background: "linear-gradient(to bottom, #42A5F5)",
-                  width: "7.5rem",
-                  height: "3rem",
-                  fontSize: "1.9rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <ShareIcon sx={{ fontSize: "3rem", mr: 0.5 }} />
-                共有
-              </MuiButton>
-              <MuiButton
-                sx={{
-                  background: "linear-gradient(#66BB6A)",
-                  width: "7.5rem",
-                  height: "3rem",
-                  fontSize: "1.9rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <SaveAltIcon sx={{ fontSize: "3rem", mr: 0.5 }} />
-                保存
-              </MuiButton>
-            </Box>
-            <MuiButton
-              sx={{
-                width: "17rem",
-                height: "3.3rem",
-                fontSize: "1.9rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
-              タイトルに戻る
-            </MuiButton>
-          </Box>
-        </Box>
-      </AppRouterCacheProvider>
-    </div>
-  );
+
+  if (!result) return null;
+
+  return <DiagnosisClient personality={personality} />;
 }
