@@ -68,11 +68,13 @@ if (buttons) buttons.style.display = "none";
     <AppRouterCacheProvider>
       <Box
         sx={{
+          p: 2,
           width: "100vw",
           height: "100dvh",
           display: "flex",
+          gap: 2,
           flexDirection: "column",
-          backgroundImage: `url('${basePath}/resultBG.png')`,
+          backgroundImage: `url('../pastel2.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
