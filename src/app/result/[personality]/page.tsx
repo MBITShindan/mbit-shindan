@@ -7,6 +7,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { Metadata } from "next";
+import Link from "next/link";
 
 type PageProps = {
   params: {
@@ -101,20 +102,22 @@ export default function Page({ params }: PageProps) {
                 保存
               </MuiButton>
             </Box>
-            <MuiButton
-              sx={{
-                width: "17rem",
-                height: "3.3rem",
-                fontSize: "1.9rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
-              タイトルに戻る
-            </MuiButton>
+            <Link href="/">
+              <MuiButton
+                sx={{
+                  width: "17rem",
+                  height: "3.3rem",
+                  fontSize: "1.9rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
+                タイトルに戻る
+              </MuiButton>
+            </Link>
           </Box>
         </Box>
       </AppRouterCacheProvider>
