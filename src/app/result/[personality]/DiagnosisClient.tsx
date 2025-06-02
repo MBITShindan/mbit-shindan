@@ -8,60 +8,47 @@ import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+import Link from "next/link";
+import { APP_BASE_URL } from "../../../lib/constants";
 
 export default function DiagnosisClient({ personality }: { personality: MBTIType }) {
   const result = diagnosisResults[personality];
-  const router = useRouter();
   const [imageGenerating, setImageGenerating] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  const shareResult = () => {
-    const text = `診断結果は「${result?.name}」タイプでした！\n`;
-    const url = window.location.href;
-    const shareData = {
-      text,
-      url,
-    };
-    if (navigator.share) {
-      navigator.share(shareData).catch(console.error);
-    } else {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-    }
-  };
+  function shareResult() {
+    // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
+    shareToTwitter();
+  }
 
-const saveAsImage = async () => {
-  if (!resultRef.current) return;
-  setImageGenerating(true);
+  function shareToTwitter() {
+    const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！\n#MBTI #性格診断\n${APP_BASE_URL}`;
+    const twitterShareUrl = `https://twitter.com/share?` +
+      `&text=${encodeURIComponent(text)}`;
+    window.open(twitterShareUrl, "_blank", "noopener,noreferrer");
+  }
 
-const buttons = document.querySelector("#actionButtons") as HTMLElement | null;
-if (buttons) buttons.style.display = "none";
+  async function saveAsImage () {
+    if (!resultRef.current) return;
+    setImageGenerating(true);
 
+    const buttons = document.querySelector("#actionButtons") as HTMLElement | null;
+    if (buttons) buttons.style.display = "none";
+    await new Promise((res) => setTimeout(res, 500)); // 待機時間を少し増やす
 
-  await new Promise((res) => setTimeout(res, 500)); // 待機時間を少し増やす
+    const canvas = await html2canvas(resultRef.current!, {
+      useCORS: true, // ★ ここが追加された箇所
+    });
 
-  const canvas = await html2canvas(resultRef.current!, {
-    useCORS: true, // ★ ここが追加された箇所
-  });
+    const link = document.createElement("a");
+    link.download = "診断結果.png";
+    link.href = canvas.toDataURL();
+    link.click();
 
-  const link = document.createElement("a");
-  link.download = "診断結果.png";
-  link.href = canvas.toDataURL();
-  link.click();
-
-  if (buttons) buttons.style.display = "flex";
-  setImageGenerating(false);
-};
-
-
-  const returnToTitle = () => {
-    localStorage.removeItem("answers");
-    localStorage.removeItem("parameters");
-    router.push("/");
+    if (buttons) buttons.style.display = "flex";
+    setImageGenerating(false);
   };
 
   return (
@@ -139,21 +126,22 @@ if (buttons) buttons.style.display = "none";
               保存
             </MuiButton>
           </Box>
-          <MuiButton
-            onClick={returnToTitle}
-            sx={{
-              width: "17rem",
-              height: "3.3rem",
-              fontSize: "1.9rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
-            タイトルに戻る
-          </MuiButton>
+          <Link href="/">
+            <MuiButton
+              sx={{
+                width: "17rem",
+                height: "3.3rem",
+                fontSize: "1.9rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
+              タイトルに戻る
+            </MuiButton>
+          </Link>
         </Box>
       </Box>
     </AppRouterCacheProvider>
