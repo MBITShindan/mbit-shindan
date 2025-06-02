@@ -14,8 +14,6 @@ type PageProps = {
   };
 };
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export async function generateStaticParams() {
   return Object.keys(diagnosisResults).map((type) => ({
     personality: type,
