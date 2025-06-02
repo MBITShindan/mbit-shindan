@@ -130,7 +130,9 @@ export default function QuestionObjects(props: Props) {
     function handleEndDiagnosis(resultType: string) {
         setTimeout(() => {
             setDiagnosisResult(resultType);
-            document.cookie = `personalityResult=${resultType}; path=/; max-age=604800`;
+            document.cookie = `personalityResult=${resultType}; path=/; max-age=604800`; // 診断結果をcookieに保存
+            document.cookie = "progress=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // 進捗をリセット
+            document.cookie = "currentProgress=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC"; // 進捗をリセット
         }, 500);
     }
 
