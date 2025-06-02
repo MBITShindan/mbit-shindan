@@ -13,15 +13,15 @@ import { APP_BASE_URL, ENDPOINTS } from "../lib/constants";
 export const metadata = {
     title: "MBIT診断",
     description: "あなたの隠れた性格タイプがわかるゲーム！",
-    // openGraph: {
-    //     title: "MBIT診断",
-    //     description: "あなたの隠れた性格タイプがわかるゲーム！",
-    //     url: APP_BASE_URL,
-    //     images: [`${APP_BASE_URL}/logo.png`]
-    // },
-    // twitter: {
-    //     card: "summary_large_image"
-    // }
+    openGraph: {
+        title: "MBIT診断",
+        description: "あなたの隠れた性格タイプがわかるゲーム！",
+        url: APP_BASE_URL,
+        images: [`${APP_BASE_URL}/logo.png`]
+    },
+    twitter: {
+        card: "summary_large_image"
+    }
 };
 
 export default async function TitlePage() {

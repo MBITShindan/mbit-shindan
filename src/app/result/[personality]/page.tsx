@@ -40,7 +40,7 @@ export default function Page({ params }: PageProps) {
             height: "100dvh",
             display: "flex",
             flexDirection: "column",
-            backgroundImage: `url('${basePath}/resultBG.png')`,
+            backgroundImage: `url('pastel2.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
