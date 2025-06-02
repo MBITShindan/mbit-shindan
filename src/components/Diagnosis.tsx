@@ -9,9 +9,9 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremiumOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const matchIcons = [
-  <EmojiEventsIcon />,
-  <WorkspacePremiumIcon />,
-  <MilitaryTechIcon />
+  <EmojiEventsIcon key={0}/>,
+  <WorkspacePremiumIcon key={1}/>,
+  <MilitaryTechIcon key={2}/>
 ];
 const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7"];
 
