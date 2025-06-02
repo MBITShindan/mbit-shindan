@@ -93,16 +93,22 @@ export default function QuestionObjects(props: Props) {
         setLeftObjects(positions);
     }, [isReady]);
 
+    // ページを開いたとき、既に診断を10個終えていたら、診断結果を表示する
     useEffect(() => {
+        const cookieCurrentProgress = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('currentProgress='))
+            ?.split('=')[1];
+        const doneList = cookieCurrentProgress ? JSON.parse(decodeURIComponent(cookieCurrentProgress)) : null;
+
         const cookieProgress = document.cookie
             .split('; ')
             .find(row => row.startsWith('progress='))
             ?.split('=')[1];
-
         const progressObject = cookieProgress ? JSON.parse(decodeURIComponent(cookieProgress)) : null;
 
-        if (progressObject) {
-            console.log(progressObject);
+        if (doneList && doneList.length >= 10) {
+            console.log(doneList, cookieProgress);
             const resultType: string = personalResultResponse(progressObject);
             handleEndDiagnosis(resultType);
         }
