@@ -8,7 +8,21 @@ import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import Link from 'next/link';
 import { cookies } from "next/headers";
 import { MBTIType } from "../diagnosisResults";
-import { ENDPOINTS } from "../lib/constants";
+import { APP_BASE_URL, ENDPOINTS } from "../lib/constants";
+
+export const metadata = {
+    title: "MBIT診断",
+    description: "あなたの隠れた性格タイプがわかるゲーム！",
+    // openGraph: {
+    //     title: "MBIT診断",
+    //     description: "あなたの隠れた性格タイプがわかるゲーム！",
+    //     url: APP_BASE_URL,
+    //     images: [`${APP_BASE_URL}/logo.png`]
+    // },
+    // twitter: {
+    //     card: "summary_large_image"
+    // }
+};
 
 export default async function TitlePage() {
     const cookieStore = await cookies();

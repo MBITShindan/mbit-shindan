@@ -9,6 +9,10 @@ import Link from "next/link";
 import { MuiButton } from "../../components/MuiButton";
 import { ReplayOutlined } from "@mui/icons-material";
 
+export const metadata = {
+    title: "MBIT診断 | 診断ランキング",
+};
+
 type RankingData = {
     type: string;
     ratio: number;
