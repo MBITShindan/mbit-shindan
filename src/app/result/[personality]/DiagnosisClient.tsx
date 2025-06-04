@@ -17,7 +17,6 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   const result = diagnosisResults[personality];
   const [imageGenerating, setImageGenerating] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
-  const diagnosisImageRef = useRef<HTMLImageElement>(null);
 
   function shareResult() {
     // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
@@ -41,12 +40,6 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
 
     // スクショ用に一時的にスタイルを適用する
     resultRef.current.style.backgroundImage = "url('/pastel2.png')";
-    if(diagnosisImageRef.current){
-      diagnosisImageRef.current.height = 60;
-      diagnosisImageRef.current.width = 60;
-      diagnosisImageRef.current.style.overflow = "visible";
-    }
-    console.log(diagnosisImageRef.current)
 
     const canvas = await html2canvas(resultRef.current!, {
       useCORS: true, // ★ ここが追加された箇所
@@ -88,10 +81,11 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
             maxWidth: "25rem",
             margin: "0 auto",
             padding: "0 1rem",
+            backgroundSize: "100% auto"
           }}
           ref={resultRef}
         >
-          <Diagnosis personality={personality} diagnosisImageRef={diagnosisImageRef}/>
+          <Diagnosis personality={personality}/>
         </Box>
         <Box
           id="actionButtons"
