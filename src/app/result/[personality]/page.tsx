@@ -3,25 +3,26 @@ import { Metadata } from "next";
 import DiagnosisClient from "./DiagnosisClient";
 
 type PageProps = {
-  params: {
-    personality: MBTIType;
-  };
+  params: Promise<{ personality: MBTIType }>;
 };
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ personality: MBTIType }[]> {
   return Object.keys(diagnosisResults).map((type) => ({
-    personality: type,
+    personality: type as MBTIType,
   }));
 }
 
-export async function generateMetadata({ params }: { params: { personality: string } }): Promise<Metadata> {
-  const mbit: string = diagnosisResults[params.personality as MBTIType].name;
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
+  const { personality } = params;
+  const mbit = diagnosisResults[personality].name;
   return {
-    title: `MBIT診断 | ${mbit}`,
+    title: `MBTI診断 | ${mbit}`,
   };
 }
 
-export default function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params;
   const { personality } = params;
   const result = diagnosisResults[personality];
 
