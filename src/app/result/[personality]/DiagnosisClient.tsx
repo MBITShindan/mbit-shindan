@@ -63,7 +63,6 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
       <Box
         className="bg-[url('/pastel2.png')] "
         sx={{
-          p: 2,
           width: "100vw",
           height: "100dvh",
           display: "flex",
