@@ -60,6 +60,7 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   return (
     <AppRouterCacheProvider>
       <Box
+        className="bg-[url('/pastel2.png')] "
         sx={{
           p: 2,
           width: "100vw",
@@ -67,7 +68,6 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
           display: "flex",
           gap: 2,
           flexDirection: "column",
-          backgroundImage: `url('../pastel2.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
