@@ -133,15 +133,15 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
               保存
             </MuiButton>
           </Box>
-                <Link href="/">
-                    <MuiButton
-                        name="home"
-                        sx={{ fontSize: "1.6rem" }}
-                    >
-                        <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
-                        タイトルに戻る
-                    </MuiButton>
-                </Link>
+          <Link href="/">
+              <MuiButton
+                  name="home"
+                  sx={{ fontSize: "1.6rem" }}
+              >
+                  <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
+                  タイトルに戻る
+              </MuiButton>
+          </Link>
         </Box>
       </Box>
     </AppRouterCacheProvider>
