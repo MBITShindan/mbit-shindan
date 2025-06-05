@@ -8,7 +8,6 @@ import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { useRef, useState } from "react";
-import { useRouter } from 'next/navigation';
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
@@ -18,16 +17,12 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   const result = diagnosisResults[personality];
   const [imageGenerating, setImageGenerating] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   function shareResult() {
     // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
     shareToTwitter();
   }
 
-  function handleclick(){
-    router.push("/");
-  }
 
   function shareToTwitter() {
     const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！\n#MBTI #性格診断\n${APP_BASE_URL}`;
@@ -139,15 +134,15 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
               保存
             </MuiButton>
           </Box>
-
+          <Link href="/">
               <MuiButton
                   name="home"
                   sx={{ fontSize: "1.6rem" }}
-                  onClick={handleclick}
               >
                   <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
                   タイトルに戻る
               </MuiButton>
+          </Link>
         </Box>
       </Box>
     </AppRouterCacheProvider>
