@@ -7,11 +7,11 @@ import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import ReplayIcon from '@mui/icons-material/Replay';
 import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
+import { ReplayOutlined } from "@mui/icons-material";
 
 export default function DiagnosisClient({ personality }: { personality: MBTIType }) {
   const result = diagnosisResults[personality];
@@ -22,6 +22,7 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
     // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
     shareToTwitter();
   }
+
 
   function shareToTwitter() {
     const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！\n#MBTI #性格診断\n${APP_BASE_URL}`;
@@ -60,6 +61,7 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   return (
     <AppRouterCacheProvider>
       <Box
+        className="bg-[url('/pastel2.png')] "
         sx={{
           p: 2,
           width: "100vw",
@@ -67,7 +69,6 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
           display: "flex",
           gap: 2,
           flexDirection: "column",
-          backgroundImage: `url('../pastel2.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -134,20 +135,13 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
             </MuiButton>
           </Box>
           <Link href="/">
-            <MuiButton
-              sx={{
-                width: "17rem",
-                height: "3.3rem",
-                fontSize: "1.9rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
-              タイトルに戻る
-            </MuiButton>
+              <MuiButton
+                  name="home"
+                  sx={{ fontSize: "1.6rem" }}
+              >
+                  <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
+                  タイトルに戻る
+              </MuiButton>
           </Link>
         </Box>
       </Box>
