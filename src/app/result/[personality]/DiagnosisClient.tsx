@@ -7,11 +7,11 @@ import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import ReplayIcon from '@mui/icons-material/Replay';
 import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
+import { ReplayOutlined } from "@mui/icons-material";
 
 export default function DiagnosisClient({ personality }: { personality: MBTIType }) {
   const result = diagnosisResults[personality];
@@ -133,22 +133,15 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
               保存
             </MuiButton>
           </Box>
-          <Link href="/">
-            <MuiButton
-              sx={{
-                width: "17rem",
-                height: "3.3rem",
-                fontSize: "1.9rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <ReplayIcon sx={{ fontSize: "3.1rem", mr: 0.5 }} />
-              タイトルに戻る
-            </MuiButton>
-          </Link>
+                <Link href="/">
+                    <MuiButton
+                        name="home"
+                        sx={{ fontSize: "1.6rem" }}
+                    >
+                        <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
+                        タイトルに戻る
+                    </MuiButton>
+                </Link>
         </Box>
       </Box>
     </AppRouterCacheProvider>
