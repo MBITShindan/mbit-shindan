@@ -9,18 +9,17 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremiumOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const matchIcons = [
-  <EmojiEventsIcon />,
-  <WorkspacePremiumIcon />,
-  <MilitaryTechIcon />
+  <EmojiEventsIcon key={0}/>,
+  <WorkspacePremiumIcon key={1}/>,
+  <MilitaryTechIcon key={2}/>
 ];
 const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7"];
 
 type Props = {
   personality: MBTIType;
-  diagnosisImageRef: React.RefObject<HTMLImageElement | null>;
 };
 
-export default function Diagnosis({ personality, diagnosisImageRef }: Props) {
+export default function Diagnosis({ personality }: Props) {
   const result = diagnosisResults[personality];
 
   if (!result) {
@@ -47,12 +46,14 @@ export default function Diagnosis({ personality, diagnosisImageRef }: Props) {
         {/* キャラクター画像 */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "0.5rem", marginLeft: "10rem" }}>
           <Image
-            ref={diagnosisImageRef}
             src={result.image.replace("../public", "")}
             alt={`${result.name}の画像`}
             width={100}
             height={140}
+            priority
             style={{
+              width: "auto",
+              height: "auto",
               marginBottom: "1.5rem",
               marginTop: "-0.75rem",
             }}
