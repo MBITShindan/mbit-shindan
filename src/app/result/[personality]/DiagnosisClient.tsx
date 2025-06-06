@@ -7,16 +7,29 @@ import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
 import { ReplayOutlined } from "@mui/icons-material";
 
 export default function DiagnosisClient({ personality }: { personality: MBTIType }) {
-  const result = diagnosisResults[personality];
+   const result = diagnosisResults[personality];
   const [imageGenerating, setImageGenerating] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const reload = searchParams.get("reload");
+    if (reload === "1") {
+      // クエリを削除してからリロード（無限ループ防止）
+      router.replace("/result"); // App Router 用の `router.replace`
+      window.location.reload();
+    }
+  }, [searchParams, router]);
 
   function shareResult() {
     // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
