@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { useRef, useState,useEffect } from "react";
+import { useRef, useState} from "react";
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
