@@ -44,21 +44,19 @@ export default function Diagnosis({ personality }: Props) {
         </h1>
 
         {/* キャラクター画像 */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "0.5rem", marginLeft: "10rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "0.5rem", marginLeft: "5rem" }}>
           <Image
             src={result.image.replace("../public", "")}
             alt={`${result.name}の画像`}
-            width={100}
-            height={140}
-            priority
+            width={80}
+            height={100}
+            unoptimized
             style={{
-              width: "auto",
-              height: "auto",
               marginBottom: "1.5rem",
-              marginTop: "-0.75rem",
             }}
           />
-          <p style={{ fontSize: "1.125rem", color: "#666", marginTop: "-1rem", marginRight: "5rem" }}>
+          {/* <p style={{ fontSize: "1.125rem", color: "#666", marginTop: "-1rem", marginRight: "5rem" }}> */}
+          <p style={{ fontSize: "1.125rem", color: "#666", marginTop: "-1rem" }}>
             タイプ<br />【{result.type}】
           </p>
         </div>
@@ -157,11 +155,10 @@ export default function Diagnosis({ personality }: Props) {
               alt={`${result.recommendedFoods.name}の画像`}
               width={120}
               height={120}
+              unoptimized
               style={{
                 borderRadius: "0.5rem",
-                marginTop: "-1.25rem",
-                width: "auto",
-                height: "auto",
+                marginTop: "-0.5rem",
               }}
             />
           </div>
