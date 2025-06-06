@@ -62,16 +62,20 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
     <AppRouterCacheProvider>
       <Box
         className="bg-[url('/pastel2.png')] "
-        sx={{
-          width: "100vw",
-          height: "100dvh",
-          display: "flex",
-          gap: 2,
-          flexDirection: "column",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+            sx={{
+                  width: "100vw",
+                  height: "100dvh",
+                  overflow: "hidden",
+                  position: "fixed",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  display: "flex",
+                  gap: "1rem",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  pb: "2rem",
+            }}
       >
         <Box
           sx={{
