@@ -19,14 +19,14 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   const resultRef = useRef<HTMLDivElement>(null);
 
   // ⭐ 初回だけページをリロードする処理
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!sessionStorage.getItem("hasReloaded")) {
-        sessionStorage.setItem("hasReloaded", "true");
-        window.location.reload();
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     if (!sessionStorage.getItem("hasReloaded")) {
+  //       sessionStorage.setItem("hasReloaded", "true");
+  //       window.location.reload();
+  //     }
+  //   }
+  // }, []);
 
   function shareResult() {
     shareToTwitter();
@@ -140,12 +140,12 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
               保存
             </MuiButton>
           </Box>
-          <Link href="/">
-            <MuiButton name="home" sx={{ fontSize: "1.6rem" }}>
+          {/* <Link href="/"> */}
+            <MuiButton name="home" sx={{ fontSize: "1.6rem" }} onClick={() => window.location.href = "/"}>
               <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
               タイトルに戻る
             </MuiButton>
-          </Link>
+          {/* </Link> */}
         </Box>
       </Box>
     </AppRouterCacheProvider>
