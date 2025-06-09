@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { MBTIType, diagnosisResults } from "../../../diagnosisResults";
 import Diagnosis from "../../../components/Diagnosis";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
@@ -7,7 +8,6 @@ import { Box } from "@mui/material";
 import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { useRef, useState} from "react";
 import html2canvas from "html2canvas";
 import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
@@ -18,11 +18,19 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
   const [imageGenerating, setImageGenerating] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
+  // ⭐ 初回だけページをリロードする処理
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!sessionStorage.getItem("hasReloaded")) {
+        sessionStorage.setItem("hasReloaded", "true");
+        window.location.reload();
+      }
+    }
+  }, []);
+
   function shareResult() {
-    // TODO: ポップアップからurlコピー, twitter, lineを選べるようにする
     shareToTwitter();
   }
-
 
   function shareToTwitter() {
     const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！\n#MBTI #性格診断\n${APP_BASE_URL}`;
@@ -39,13 +47,9 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
     if (buttons) buttons.style.display = "none";
     await new Promise((res) => setTimeout(res, 500));
 
-    // スクショ用に一時的にスタイルを適用する
     resultRef.current.style.backgroundImage = "url('/pastel2.png')";
 
-    const canvas = await html2canvas(resultRef.current!, {
-      useCORS: true
-    });
-
+    const canvas = await html2canvas(resultRef.current!, { useCORS: true });
     const link = document.createElement("a");
     link.download = "診断結果.png";
     link.href = canvas.toDataURL();
@@ -53,29 +57,27 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
 
     if (buttons) buttons.style.display = "flex";
     setImageGenerating(false);
-
-    // スクショ用に一時的に適用したスタイルを除去する
     resultRef.current.style.backgroundImage = "";
   };
 
   return (
     <AppRouterCacheProvider>
       <Box
-        className="bg-[url('/pastel2.png')] "
-            sx={{
-                  width: "100vw",
-                  height: "100dvh",
-                  overflow: "hidden",
-                  position: "fixed",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  display: "flex",
-                  gap: "1rem",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  pb: "2rem",
-            }}
+        className="bg-[url('/pastel2.png')]"
+        sx={{
+          width: "100vw",
+          height: "100dvh",
+          overflow: "hidden",
+          position: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          gap: "1rem",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          pb: "2rem",
+        }}
       >
         <Box
           sx={{
@@ -85,12 +87,13 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
             maxWidth: "25rem",
             margin: "0 auto",
             padding: "0 1rem",
-            backgroundSize: "100% auto"
+            backgroundSize: "100% auto",
           }}
           ref={resultRef}
         >
           <Diagnosis personality={personality}/>
         </Box>
+
         <Box
           id="actionButtons"
           sx={{
@@ -138,13 +141,10 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
             </MuiButton>
           </Box>
           <Link href="/">
-              <MuiButton
-                  name="home"
-                  sx={{ fontSize: "1.6rem" }}
-              >
-                  <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
-                  タイトルに戻る
-              </MuiButton>
+            <MuiButton name="home" sx={{ fontSize: "1.6rem" }}>
+              <ReplayOutlined sx={{ fontSize: "3.1rem" }} />
+              タイトルに戻る
+            </MuiButton>
           </Link>
         </Box>
       </Box>

@@ -331,19 +331,20 @@ export default async function TitlePage() {
                             前回の診断結果
                         </MuiButton>
                     )}
-                    <Link href="rankings">
-                        <MuiButton
-                            name="ranking"
-                            sx={{
-                                width: "17rem",
-                                height: "4rem",
-                                fontSize: "1.6rem"
-                            }}
-                        >
-                            <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
-                            診断ランキング
-                        </MuiButton>
+                    <Link href={{ pathname: "/rankings", query: { reload: "1" } }}>
+                    <MuiButton
+                        name="ranking"
+                        sx={{
+                        width: "17rem",
+                        height: "4rem",
+                        fontSize: "1.6rem"
+                        }}
+                    >
+                        <StackedBarChartIcon sx={{ fontSize: "3.1rem" }} />
+                        診断ランキング
+                    </MuiButton>
                     </Link>
+
                 </Box>
             </Box>
         </AppRouterCacheProvider>
