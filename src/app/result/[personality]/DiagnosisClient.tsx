@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MBTIType, diagnosisResults } from "../../../diagnosisResults";
 import Diagnosis from "../../../components/Diagnosis";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
@@ -9,7 +9,6 @@ import { MuiButton } from "@/components/MuiButton";
 import ShareIcon from '@mui/icons-material/Share';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import html2canvas from "html2canvas";
-import Link from "next/link";
 import { APP_BASE_URL } from "../../../lib/constants";
 import { ReplayOutlined } from "@mui/icons-material";
 
