@@ -31,12 +31,14 @@ export default function DiagnosisClient({ personality }: { personality: MBTIType
     shareToTwitter();
   }
 
-  function shareToTwitter() {
-    const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！\n#MBTI #性格診断\n${APP_BASE_URL}`;
-    const twitterShareUrl = `https://twitter.com/share?` +
-      `&text=${encodeURIComponent(text)}`;
-    window.open(twitterShareUrl, "_blank", "noopener,noreferrer");
-  }
+
+function shareToTwitter() {
+  const text = `診断結果は「${result?.name}」タイプでした！ みんなもやってみてね！`;
+  const hashtags = "MBTI,性格診断";
+  const twitterShareUrl = `https://twitter.com/intent/tweet?` +
+    `text=${encodeURIComponent(text)}&url=${encodeURIComponent(APP_BASE_URL)}&hashtags=${encodeURIComponent(hashtags)}`;
+  window.open(twitterShareUrl, "_blank", "noopener,noreferrer");
+}
 
   async function saveAsImage () {
     if (!resultRef.current) return;
