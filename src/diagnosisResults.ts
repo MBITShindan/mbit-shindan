@@ -40,7 +40,7 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
             food: "油そば",
             description: [
                 "ひらめきは冷たく、カラフルにやってくる。シュエインエーなら、混ぜるたびに新発見！",
-                '熱い議論の合間にぴったりな"アイデアクーリング"デザートです。`
+                '熱い議論の合間にぴったりな"アイデアクーリング"デザートです。'
             ]
         }
     },
