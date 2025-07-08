@@ -13,9 +13,11 @@ export type DiagnosisResult = {
     description: string[]; // MBTI診断結果の説明(index0: 性格のタイトル, index1: 性格の説明)
     goodMatches: string[]; // 相性の良いタイプ(index0~2: タイプ名, 上から相性の良い順)
     recommendedFoods: { // おすすめの食べ物
-        name: string; // 食べ物の名前
+        index: number; // 屋台番号
+        school: string; // 学校名
+        shop: string; // 屋台名
+        food: string; // 食べ物の名前 (URLの一部として使用)
         description: string[]; // 食べ物の説明(index0: 食べ物の説明, index1: おすすめの理由)
-        image: string; // 食べ物の画像URL
     };
 };
 
@@ -32,12 +34,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["INFJ", "INTP", "ENFP"],
         recommendedFoods: {
-            name: "油そば",
+            index: 13,
+            school: "河原電子ビジネス専門学校",
+            shop: "Cool Spot",
+            food: "油そば",
             description: [
-                "混ぜて、食べて、また語る。そんな油そばがおすすめ。",
-                'ひらめきを引き出す"食の議論相手"です。'
-            ],
-            image: "../public/food/油そば.png"
+                "ひらめきは冷たく、カラフルにやってくる。シュエインエーなら、混ぜるたびに新発見！",
+                '熱い議論の合間にぴったりな"アイデアクーリング"デザートです。`
+            ]
         }
     },
     "INTP": {
@@ -50,12 +54,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ENTP", "INFJ", "INTJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 7,
+            school: "河原外語観光・製菓専門学校",
+            shop: "かすてら～くまの森～",
+            food: "東京カステラ",
             description: [
-                "トッピングの組み合わせに無限の可能性がある油そば。",
-                "実験的な好奇心を満たすメニューとしておすすめ。"
-            ],
-            image: "../public/food/油そば.png"
+                "素材の背景まで味わいたいあなたに、カステラを。",
+                "静かに、でも深く、甘さの真理にたどり着けるかもしれません。"
+            ]
         }
     },
     "INTJ": {
@@ -68,12 +74,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ENFP", "INTP", "INFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 27,
+            school: "河原医療大学校 新居浜校",
+            shop: "君のハートにフランクフルト♡",
+            food: "フランクフルト",
             description: [
-                "油そばは、無駄を削ぎ落とした完成された一杯。",
-                "合理性を求めるあなたにこそおすすめです。"
-            ],
-            image: "../public/food/油そば.png"
+                "ムダなく旨い。それがフランクフルト。",
+                "未来を見据えるあなたにふさわしい、合理的かつ満足感ある一品です。"
+            ]
         }
     },
     "ENTJ": {
@@ -86,12 +94,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["INTP", "INFP", "ENFP"],
         recommendedFoods: {
-            name: "油そば",
+            index: 22,
+            school: "河原医療福祉専門学校",
+            shop: "飯バーガーと揚げ上げパリピ餃子",
+            food: "ライスバーガー",
             description: [
-                "一皿で満足感MAX、エネルギッシュな油そばがおすすめ。",
-                "効率よく栄養を摂って、次の挑戦へ進もう。"
-            ],
-            image: "../public/food/油そば.png"
+                "行動に迷いは不要。",
+                "がっつりいけるライスバーガーが、あなたのパワーと統率力をさらに引き出します。"
+            ]
         }
     },
     // 外交官タイプ
@@ -105,12 +115,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["INTJ", "INFJ", "ENTP"],
         recommendedFoods: {
-            name: "油そば",
+            index: 30,
+            school: "河原医療大学校",
+            shop: "冷やしパイン直売所",
+            food: "冷やしパイン",
             description: [
-                "混ぜる楽しさも、味の個性も満点。",
-                "自由を愛するあなたには油そばがおすすめ！"
-            ],
-            image: "../public/food/油そば.png"
+                "太陽みたいに明るいあなたには、冷やしパイン。",
+                "甘酸っぱいエネルギーが、あなたのひらめきに火をつけます！"
+            ]
         }
     },
     "INFP": {
@@ -123,12 +135,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ENFJ", "INTJ", "INFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 15,
+            school: "河原デザイン・アート専門学校",
+            shop: "神の白玉",
+            food: "白玉",
             description: [
-                "見た目以上に深みのある味わいが魅力の油そば。",
-                "感受性豊かなあなたにおすすめのほっとする一品。"
-            ],
-            image: "../public/food/油そば.png"
+                "やわらかな甘さに、そっと寄り添う白玉を。",
+                "あなたの静かな情熱と、やさしい心にぴったりの癒しです。"
+            ]
         }
     },
     "INFJ": {
@@ -141,12 +155,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ENFP", "INTP", "ENFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 14,
+            school: "河原電子ビジネス専門学校",
+            shop: "Tasty Lassi",
+            food: "ラッシー",
             description: [
-                "内なる情熱を支えるのは、意外とがっつり系。",
-                "油そばは、静かな闘志に火をつける一杯としておすすめです。"
-            ],
-            image: "../public/food/油そば.png"
+                "心に静かに寄り添う一杯、ラッシー。",
+                "理想を抱きながら静かに燃えるあなたに、じんわり沁みる味わいを。"
+            ]
         }
     },
     "ENFJ": {
@@ -159,12 +175,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["INFP", "ISFP", "INFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 20,
+            school: "河原ビューティーモード専門学校",
+            shop: "フルポンパニック！",
+            food: "フルーツポンチ",
             description: [
-                "みんなを元気づけたいなら、まずは自分から元気に。",
-                "油そばは、あなたのパワーを支えるおすすめメニュー。"
-            ],
-            image: "../public/food/油そば.png"
+                "みんなを笑顔にするあなたには、フルーツポンチ。",
+                "カラフルな果物が、あなたの愛情深さをそのまま映しています。"
+            ]
         }
     },
     // 番人タイプ
@@ -178,12 +196,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ISFJ", "ISTJ", "ESFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 11,
+            school: "河原電子ビジネス専門学校",
+            shop: "ポテト日和",
+            food: "フライドポテト",
             description: [
-                "はっきりした味付けと、管理しやすいトッピング構成。",
-                "リーダー気質のあなたに油そばはぴったりでおすすめです。"
-            ],
-            image: "../public/food/油そば.png"
+                "選ぶなら定番、外さないのがポテト。",
+                "責任感と判断力で皆を導くあなたにふさわしい、安定のおいしさです。"
+            ]
         }
     },
     "ISTJ": {
@@ -196,12 +216,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ISFJ", "ESTJ", "ESFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 1,
+            school: "大原簿記公務員専門学校 愛媛校",
+            shop: "俺たちの塩焼きそば",
+            food: "塩焼きそば",
             description: [
-                "見た目より実力派。バランスの取れた油そばは信頼できる一杯。",
-                "堅実なあなたにおすすめの確かな味です。"
-            ],
-            image: "../public/food/油そば.png"
+                "シンプル・イズ・ベスト。それが塩焼きそば。",
+                "伝統を重んじるあなたに、誠実でどこか懐かしい一皿を。"
+            ]
         }
     },
     "ISFJ": {
@@ -214,12 +236,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ESTJ", "ESFJ", "ISFP"],
         recommendedFoods: {
-            name: "油そば",
+            index: 19,
+            school: "河原デザイン・アート専門学校",
+            shop: "えりんぎ本舗",
+            food: "焼きえりんぎ",
             description: [
-                "優しさとボリュームを両立した油そば。",
-                "誰かのために動き続けるあなたにおすすめです。"
-            ],
-            image: "../public/food/油そば.png"
+                "ほっとする味、えりんぎの優しさ。",
+                "人を思いやるあなたに、ふんわり香る落ち着きをどうぞ。"
+            ]
         }
     },
     "ESFJ": {
@@ -232,12 +256,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ISFJ", "ESTJ", "ENFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 12,
+            school: "河原電子ビジネス専門学校",
+            shop: "Cotton ★ Candy",
+            food: "綿菓子",
             description: [
-                "親しみやすい味と満足感。みんなにも勧めたくなる一杯。",
-                "人とのつながりを大切にするあなたにおすすめの油そば。"
-            ],
-            image: "../public/food/油そば.png"
+                "みんなで楽しむなら綿菓子。",
+                "あなたの気配りと明るさが、このふわふわと一緒に空気を和ませてくれます。"
+            ]
         }
     },
     // 探検家タイプ
@@ -251,12 +277,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ISFP", "ESFP", "ENTJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 10,
+            school: "河原調理専門学校",
+            shop: "愛LOVE♡パニーニ",
+            food: "パニーニ",
             description: [
-                "スピード感とインパクト。そんな油そばがおすすめ。",
-                "今を全力で楽しむあなたの活力源です。"
-            ],
-            image: "../public/food/油そば.png"
+                "動いて、笑って、すぐ次へ。",
+                "そんなあなたにピッタリなパニーニ。片手で味わう、最高の冒険フード！"
+            ]
         }
     },
     "ISTP": {
@@ -269,12 +297,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ISFP", "ENTP", "ISFJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 8,
+            school: "河原外語観光・製菓専門学校",
+            shop: "Fry&Fly～!!―London直行便―",
+            food: "フィッシュ＆チップス",
             description: [
-                "シンプルなのに奥深い、操作性の高い一杯。",
-                "油そばは、探究心旺盛なあなたにおすすめです。"
-            ],
-            image: "../public/food/油そば.png"
+                "余計な装飾はいらない。",
+                "フィッシュ＆チップスでシンプルに、でもしっかりと味わうひとときを。"
+            ]
         }
     },
     "ISFP": {
@@ -287,12 +317,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ENFP", "ESTP", "ISTJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 24,
+            school: "河原医療福祉専門学校",
+            shop: "ふるふるクロッフル",
+            food: "クロッフル",
             description: [
-                "気ままに混ぜて、気ままに味わう自由な油そば。",
-                "マイペースなあなたにぴったりでおすすめ。"
-            ],
-            image: "../public/food/油そば.png"
+                "甘くて、さっぱり、そしてちょっとおしゃれ。",
+                "クロッフル＆レモンスカッシュは、あなたの美的感覚にぴったり。"
+            ]
         }
     },
     "ESFP": {
@@ -305,12 +337,14 @@ export const diagnosisResults: {[type in MBTIType]: DiagnosisResult} = {
         ],
         goodMatches: ["ESTP", "ISFP", "ENTJ"],
         recommendedFoods: {
-            name: "油そば",
+            index: 26,
+            school: "河原アイペットワールド専門学校",
+            shop: "aiカフェ",
+            food: "ゼリーサイダー",
             description: [
-                "見た目も味もガツンとくる油そばでテンションUP！",
-                "場を盛り上げるあなたにおすすめの主役級メニュー。"
-            ],
-            image: "../public/food/油そば.png"
+                "きらきら弾けるゼリーサイダー。",
+                "あなたの明るさと元気が、そのままドリンクになったような一杯です！"
+            ]
         }
     }
 }

@@ -151,8 +151,8 @@ export default function Diagnosis({ personality }: Props) {
               {result.recommendedFoods.description[1]}
             </p>
             <Image
-              src={result.recommendedFoods.image.replace("../public", "")}
-              alt={`${result.recommendedFoods.name}の画像`}
+              src={`/food/${result.recommendedFoods.food}.png`}
+              alt={`${result.recommendedFoods.food}の画像`}
               width={120}
               height={120}
               unoptimized
