@@ -9,7 +9,7 @@ import FlatwareIcon from '@mui/icons-material/FlatwareOutlined';
 import DiagnosisAisyou from "./DiagnosisAisyou";
 import { ENDPOINTS } from "../lib/constants";
 
-const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7", "#DFE4EA"];
+const matchBgColors = ["#FDECC8", "#F9E0DC", "#E2ECF7"];
 
 type Props = {
   personality: MBTIType;
@@ -27,26 +27,33 @@ interface CompatibilityData {
 }
 
 export default function Diagnosis({ personality }: Props) {
-  const result = diagnosisResults[personality];
-  const [goodTypes, setGoodTypes] = useState<CompatibilityData|null>(null);
+    const result = diagnosisResults[personality];
+    const [goodTypes, setGoodTypes] = useState<CompatibilityData>();
+    //その他の値
+    const [other, setOther] = useState<number>(0);
 
-  useEffect(() => {
-    const fetchGoodTypes = async () => {
-      try {
-        const res = await fetch(`${ENDPOINTS.compatibility}?personalityType=${personality}`);
-        if (!res.ok) {
-          console.error("Fetch failed with status:", res.status)
-          return;
+    useEffect(() => {
+      const fetchGoodTypes = async () => {
+        try {
+          const res = await fetch(`${ENDPOINTS.compatibility}?personalityType=${personality}`);
+          if (!res.ok) {
+            console.error("Fetch failed with status:", res.status)
+            return;
+          }
+
+          const json: CompatibilityData = await res.json();
+          setGoodTypes(json);
+
+          // other の計算と状態更新
+          const total = json.compatibilities.reduce((sum, c) => sum + c.percentage, 0);
+          setOther(100 - total);
+
+        } catch (error) {
+          console.error("Fetch error:", error);
         }
-      const json:CompatibilityData = await res.json();
-      setGoodTypes(json);
-      console.log(json)
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
-    };
-    fetchGoodTypes();
-  }, [personality]);
+      };
+      fetchGoodTypes();
+    }, [personality]);
 
   if (!result) return <p>診断結果が見つかりません。</p>;
 
@@ -92,15 +99,29 @@ export default function Diagnosis({ personality }: Props) {
             marginTop: "0.5rem",
           }}
         >
-          {goodTypes && goodTypes.compatibilities.map((match, index:number) => (
-            <DiagnosisAisyou
-              key={index}
-              name={match.type}
-              rate={`${match.percentage}`}
-              image={`/mbti/${match.type}.png`}
-              color={matchBgColors[index % matchBgColors.length]}
-            />
-          ))}
+        {goodTypes && (
+          <>
+            {goodTypes.compatibilities.map((match, index: number) => (
+              <DiagnosisAisyou
+                key={index}
+                name={match.type}
+                rate={`${match.percentage}%`}
+                image={`/mbti/${match.type}.png`}
+                color={matchBgColors[index % matchBgColors.length]}
+                icon = {false}
+              />
+            ))}
+            {other != 0 && (
+              <DiagnosisAisyou
+                name={"その他"}
+                rate={`${other}%`}
+                image={"<MoreHorizIcon>"} // 実際のアイコン画像 or アイコンコンポーネントに置換
+                color={"#DFE4EA"}
+                icon = {true}
+              />
+            )}
+          </>
+        )}
         </div>
       </div>
 

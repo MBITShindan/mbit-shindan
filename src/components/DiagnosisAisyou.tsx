@@ -1,15 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 type Props = {
   name: string;
   rate: string;
   image: string;
   color: string;
+  icon:boolean;
 };
 
-export default function DiagnosisAisyou({ name, rate, image, color }: Props) {
+export default function DiagnosisAisyou({ name, rate, image, color,icon }: Props) {
   return (
     <div
       style={{
@@ -24,14 +26,20 @@ export default function DiagnosisAisyou({ name, rate, image, color }: Props) {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-        <Image
-          src={image}
-          alt={`${name}の画像`}
-          width={40}
-          height={40}
-          unoptimized
-          style={{ borderRadius: "0.5rem" }}
-        />
+        {icon ?(
+            <MoreHorizIcon/>
+        ):(
+            <Image
+              src={image}
+              alt={`${name}の画像`}
+              width={40}
+              height={40}
+              unoptimized
+              style={{ borderRadius: "0.5rem" }}
+            />
+        )
+        }
+
         <span>{name}</span>
       </div>
       <span style={{ fontWeight: "bold", color: "#3C4F69" }}>{rate}</span>
