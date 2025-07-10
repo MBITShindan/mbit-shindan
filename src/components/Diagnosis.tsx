@@ -70,9 +70,9 @@ export default function Diagnosis({ personality }: Props) {
           width={80}
           height={100}
           unoptimized
-          style={{ marginBottom: "1.5rem" }}
+          style={{ marginBottom: "1.5rem", marginLeft: "5rem" }}
         />
-        <p style={{ fontSize: "1.125rem", color: "#666", marginTop: "-1rem" }}>
+        <p style={{ fontSize: "1.125rem", color: "#666", marginTop: "1rem" }}>
           タイプ<br />【{result.type}】
         </p>
       </div>
