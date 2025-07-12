@@ -62,7 +62,7 @@ export default function ModalButton(props: MainButtonProps) {
                         borderRadius: 2,
                     }}
                     >
-                    <Box>{questions[selectedId].question}</Box>
+                    <Box sx={{ fontWeight: 'bold' }}>{questions[selectedId].question}</Box>
                     </Box>
 
                     {questions[selectedId].answers.map((value, index) => (
