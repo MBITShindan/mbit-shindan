@@ -53,16 +53,16 @@ export default function ModalButton(props: MainButtonProps) {
                     }}
                 >
                     <Box
-                        className="text-lg text-left"
-                        style={{
-                            background: 'white',
-                            padding: 27,
-                            width: "85vw",
-                            margin: '10% auto',
-                            borderRadius: 6,
-                        }}
+                    sx={{
+                        bgcolor: 'background.paper', // ← ライト/ダークモード対応の背景
+                        color: 'text.primary',        // ← ライト/ダークモード対応の文字
+                        padding: 4,
+                        width: "85vw",
+                        margin: '10% auto',
+                        borderRadius: 2,
+                    }}
                     >
-                        <Box>{questions[selectedId].question}</Box>
+                    <Box>{questions[selectedId].question}</Box>
                     </Box>
 
                     {questions[selectedId].answers.map((value, index) => (
