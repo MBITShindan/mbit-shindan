@@ -93,8 +93,7 @@ export default function ModalButton(props: MainButtonProps) {
                                     width: "18.75rem",
                                     borderRadius: 2,
                                     padding: "1rem",
-                                    mt: "2rem",
-                                    color: 'text.primary'
+                                    mt: "2rem"
                                 }}
                             >
                                 <span className="text-lg text-left text-neutral-900">{value.answer}</span>
