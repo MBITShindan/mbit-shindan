@@ -97,7 +97,7 @@ export default function ModalButton(props: MainButtonProps) {
                                     mt: "2rem"
                                 }}
                             >
-                                <span className="text-lg text-left text-black">{value.answer}</span>
+                                <span className="text-lg text-left text-neutral-900">{value.answer}</span>
                             </Button>
                         </Box>
                     ))}
